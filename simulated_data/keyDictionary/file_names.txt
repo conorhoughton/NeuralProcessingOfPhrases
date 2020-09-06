@@ -1,0 +1,11 @@
+adjectives
+adverbs
+determiners
+mass_nouns
+mass_prepositions
+nouns_plural
+nouns
+phrase_nouns
+phrase_verbs
+prepositions
+verbs

@@ -1,0 +1,12 @@
+
+coeffs are the result of calculating
+
+c_et=sum_i (-1)^i w_et(i)
+
+where w_et(i) is the word coefficient, e the component number and i the word number, t stands for trial
+
+the coeff value is then sum_et abs c_et
+
+
+random has the same thing calculated using 1000 shuffles of random;
+the numbers are mean and 0.05 confidence intervals.

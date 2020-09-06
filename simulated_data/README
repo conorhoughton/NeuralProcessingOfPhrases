@@ -1,0 +1,35 @@
+
+the word is all done by
+
+simulated_eeg.jl
+
+and
+
+get_FT.m
+
+the rest are just test programmes.
+
+These rely on the list of trials given in
+
+anan.txt and similar
+
+The folder "keyDictionary" gives the lists of words for each type of
+word, eg "nouns", this is important because the word2vec vectors are
+stored in files labels the same way and in the same order, so these
+files are needed for working out how to find the word2vec vector for a
+given word.
+
+The folder "vectors" holds the actual word2vec vectors
+
+The folder "trials" holds the word list for each trial
+
+so the logic goes
+
+load anan.txt (or similar) -> this has a list of trials, find the
+trial in "trials", for each word use information from keyDirectory to
+get the correct word2vec vector from "vectors".
+
+the simulated responses go to "simuluated data"
+
+the matlab code in get_FT.m then calculates then does the Fourier
+analysis and works out the ITPC, which goes in results.

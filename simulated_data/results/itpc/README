@@ -1,0 +1,1 @@
+txt file has the freq and grand average in the first two columns, process.jl makes it out of the dat files which are participants X frequency matrices
