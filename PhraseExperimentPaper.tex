@@ -372,11 +372,28 @@ shuffling words in the RR condition.
 \label{fig:Fig1}
 \end{figure}
 
-In line with the model's prediction, EEG responses from human participants showed a significant peak in ITPC at the rate of syllable presentation (1/0.32 Hz) in all conditions tested (Fig.~\ref{fig:Fig2}A-D). However, a significant peak in ITPC at the rate of phrase presentation (1/0.64 Hz) was only observed in the grammatically well-formed AN condition (Fig.~\ref{fig:Fig2}A), which also exhibited lexical category regularity at the rate of phrases, that is, every other word came from the same lexical category. Unlike what the model predicts, in the AV condition (Fig.~\ref{fig:Fig2}B), which lacked grammatical two-word constituents but maintained lexical category regularity, no significant peak in ITPC was observed in the human EEG signal at the phrase rate (1/0.64 Hz). This peak was also absent in the MP condition (Fig.~\ref{fig:Fig2}C, grammatical two-word phrases with no lexical category regularity) and in the control RR condition (Fig.~\ref{fig:Fig2}D, word salad). A reduction in the amplitude of ITPC peaks at the phrase rate for the MP and RR conditions, when compared to the AN condition, is consistent with the model predictions.
+In line with the prediction from the simulated data, EEG responses
+from human participants showed a significant peak in ITPC at the rate
+of syllable presentation (1/0.32 Hz) in all conditions tested
+(Fig.~\ref{fig:Fig2}A-D). However, a significant peak in ITPC at the
+rate of phrase presentation (1/0.64 Hz) was only observed in the
+grammatically well-formed AN condition (Fig.~\ref{fig:Fig2}A), which
+also exhibited lexical category regularity at the rate of phrases,
+that is, every other word came from the same lexical category. Unlike
+what the model predicts, in the AV condition (Fig.~\ref{fig:Fig2}B),
+which lacked grammatical two-word constituents but maintained lexical
+category regularity, no significant peak in ITPC was observed in the
+human EEG signal at the phrase rate (1/0.64 Hz). This peak was also
+absent in the MP condition (Fig.~\ref{fig:Fig2}C, grammatical two-word
+phrases with no lexical category regularity) and in the control RR
+condition (Fig.~\ref{fig:Fig2}D, word salad). A reduction in the
+amplitude of ITPC peaks at the phrase rate for the MP and RR
+conditions, when compared to the AN condition, is consistent with the
+model predictions.
 
 
 \begin{figure}[tbhp]
-\includegraphics[width=\linewidth]{Grand_average_ITPC_for_all_phrase_conditions.png}
+\include{Figure_ITPC/itpc}
 \caption{EEG responses recorded in human participants during presentation of trials from each of the four conditions. Statistically significant peaks in ITPC values are observed at the rate of syllable presentation (1/0.32 Hz) in each of the four conditions (AN, AV, MP, RR). A statistically significant peak in ITPC is only observed at the rate of phrase presentation (1/0.64 Hz) in the AN condition (A), where phrases are grammatically well-formed and composed of the same  lexical categories. This was not significant in any of the other three conditions (B-D). Red circles represent statistical significance *= $p<0.05$. Vertical gray dotted lines represent the frequency at which syllables and two-word sequences are presented.}
 \label{fig:Fig2}
 \end{figure}
@@ -677,7 +694,21 @@ instances of the $1/f$-noise: this is done to give the graphs some
 similarity to the graphs for the real data, but is not intended to
 model participant-to-participant variability.
 
-
+The AN, AV and MP conditions use the identical stimuli as used in the
+experiment. However, the random condition differs from the RR
+condition in that the words are shuffled. In the RR condition
+adjacent words are chosen so as to not repeat lexical category, this
+deviation from true randomness affects the ITPC of the
+simulated EEG. With its diffent types of artificial noise, the simulated
+EEG is a complicated measure of the regularity of the stimuli. A much
+simpler measure is given by the Fourier coefficent
+\begin{equation}
+  \phi= \sum_e\left|sum_i (-1)^iw_e^i\right|
+\end{equation}
+where $w_e^i$ is the $e$ component of the $i$th word in a
+stream. Averaging $\phi$ over streams and normalizing to the random
+condition gives values of 1.87, 2.41, 1.41, 1.13 for AN, AV, MP and RR
+respectively.
 
 
 \subsection*{Behavioural experiment}
@@ -693,9 +724,23 @@ the final trial they were also asked ``In the last stream of words you
 hear any two-word phrases?'' and ``Write down as many things from the
 last stream of words you have just heard as you can remember''.
 
-90 subjects were recruited on prolific academic (\texttt{prolific.ac}) with a £1 payment. The subjects were pre-screened by prolific academic as United Kingdom or Irish citizens living in the United Kingdom or Ireland and were asked to identify their first language; two subjects who did not answer English were excluded. No other demographic information was collected. 
+90 subjects were recruited on prolific academic (\texttt{prolific.ac})
+with a £1 payment. The subjects were pre-screened by prolific academic
+as United Kingdom or Irish citizens living in the United Kingdom or
+Ireland and were asked to identify their first language; two subjects
+who did not answer English were excluded. No other demographic
+information was collected.
 
-The average number of words remembered from the previous trial was very low; on average subjects recalled just 3.82 words on average and often these words were not from the same most recent trial or even not represented in the experiment at all. There was also no significant difference between three conditions in the number of subjects who mistakenly answered that the previous trial contained a four-word phrase. All data and the scripts used to run the experiment are available online (\texttt{/github.com/conorhoughton/listening\textunderscore experiment\textunderscore 2020}).  
+The average number of words remembered from the previous trial was
+very low; on average subjects recalled just 3.82 words on average and
+often these words were not from the same most recent trial or even not
+represented in the experiment at all. There was also no significant
+difference between three conditions in the number of subjects who
+mistakenly answered that the previous trial contained a four-word
+phrase. All data and the scripts used to run the experiment are
+available online
+(\texttt{/github.com/conorhoughton/listening\textunderscore
+  experiment\textunderscore 2020}).
 
 \section*{Competing Interests}
 The authors declare that no competing interests exist.
