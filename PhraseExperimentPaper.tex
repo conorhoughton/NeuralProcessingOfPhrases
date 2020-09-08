@@ -373,40 +373,122 @@ shuffling words in the RR condition.
 \end{figure}
 
 In line with the prediction from the simulated data, EEG responses
-from human participants showed a significant peak in ITPC at the rate
-of syllable presentation (1/0.32 Hz) in all conditions tested
-(Fig.~\ref{fig:Fig2}A-D). However, a significant peak in ITPC at the
-rate of phrase presentation (1/0.64 Hz) was only observed in the
-grammatically well-formed AN condition (Fig.~\ref{fig:Fig2}A), which
-also exhibited lexical category regularity at the rate of phrases,
-that is, every other word came from the same lexical category. Unlike
-what the model predicts, in the AV condition (Fig.~\ref{fig:Fig2}B),
-which lacked grammatical two-word constituents but maintained lexical
-category regularity, no significant peak in ITPC was observed in the
-human EEG signal at the phrase rate (1/0.64 Hz). This peak was also
-absent in the MP condition (Fig.~\ref{fig:Fig2}C, grammatical two-word
-phrases with no lexical category regularity) and in the control RR
-condition (Fig.~\ref{fig:Fig2}D, word salad). A reduction in the
-amplitude of ITPC peaks at the phrase rate for the MP and RR
-conditions, when compared to the AN condition, is consistent with the
-model predictions.
+from human participants showed a highly significant peak ($p<10^{-6}$)
+in ITPC at the rate of syllable presentation (1/0.32 Hz) in all
+conditions tested (Fig.~\ref{fig:Fig2}). At the rate of phrase
+presentation (1/0.64 Hz) only the AN condition shows an unambiguous
+response; this condition is the one where the phrases are
+grammatically well formed and which has all the phrases are in the
+same lexical category. For the AN condition the peak at the phrase
+rate is highly significant ($p<10^{-6}$) whereas, while there is some
+evidence of a peak for the MP and AV conditions, this evidence is
+marginally, or not, significant ($p=0.42$ and $p=0.63$ respectively);
+for RR there is no evidence of a phrase response, $p=0.36$. A
+reduction in the amplitude of ITPC peaks at the phrase rate for the MP
+and RR conditions, when compared to the AN condition, is consistent
+with the simulated data, but the absense of a significant peak in the
+AN condition is not.
 
+As described in the Methods section, data for the AN, AV and MP
+conditions come from 20 participants, there is only data for the
+control RR condition for 16 of these. Restricting the analysis to
+these 16 participants does not change the conconclusions from these
+results; on 16 participants the peaks at the rate of syllable
+presentatioon are highly significant ($p<10^{-6}$) for all
+participants; the phrase peak is still highly significant for the AN
+condition, the AV condition is marginally significant ($p=0.44$), the
+MP condition has $p=0.15$ and RR, $p=0.38$.
+
+As an alternative to a statistical approach in which the streams are
+the `trials' used to calculate the ITPC and statistics are computed
+using participants as items; we also performed the same analysis using
+different participants as the `trials' to calculate the ITPC and
+streams as items. In this approach the ITPC calculation produces far
+smaller peaks because there is a difference in the phase of responses
+from participant to participant so the phase coherence measure both
+the variability of the response to stimulus, which we are interested
+in, as well as the less interesting variability in phase due to
+differences between the participants, for example, in their head shape
+and size. Nonetheless, the result is somewhat similar: there are
+highly significant peaks at the syllable rate ($p<10^{-6}$) and at the
+phrase rate for $AN$: $p=1.69\times 10^{-5}$; whereas the AV and MP
+conditions show no peaks; this analysis was not performed on the
+control RR condition since it has a different number of participants.
 
 \begin{figure}[tbhp]
 \include{Figure_ITPC/itpc}
-\caption{EEG responses recorded in human participants during presentation of trials from each of the four conditions. Statistically significant peaks in ITPC values are observed at the rate of syllable presentation (1/0.32 Hz) in each of the four conditions (AN, AV, MP, RR). A statistically significant peak in ITPC is only observed at the rate of phrase presentation (1/0.64 Hz) in the AN condition (A), where phrases are grammatically well-formed and composed of the same  lexical categories. This was not significant in any of the other three conditions (B-D). Red circles represent statistical significance *= $p<0.05$. Vertical gray dotted lines represent the frequency at which syllables and two-word sequences are presented.}
+\caption{EEG responses recorded in human participants during
+  presentation of trials from each of the four
+  conditions. Statistically significant peaks in ITPC values are
+  observed at the rate of syllable presentation (1/0.32 Hz) in each of
+  the four conditions (AN, AV, MP, RR). A statistically significant
+  peak in ITPC is observed at the rate of phrase presentation (1/0.64
+  Hz) in the AN condition, where phrases are grammatically well-formed
+  and composed of the same lexical categories. The peak for MP is just
+  significant, for AV is just fails to be significant. Red stars
+  represent statistical significance $\star: p<0.05$ and
+  $\star\star\star: p<10^{6}$. Vertical red lines represent the
+  frequency at which syllables and two-word sequences are presented.}
 \label{fig:Fig2}
 \end{figure}
 \color{blue}
-We next compared the ITPC values across the four conditions at the phrase and syllable rate using a one-way ANOVA. The effect of condition was significant at the phrase frequency (F(3,57)=6.05, p=0.002). Planned pairwise comparisons between ITPC amplitudes at the phrase frequency revealed that the ITPC was significantly higher in the AN condition than in each of the other three conditions (AN vs AV: p=0.024, AN vs. MP: $p<0.001$, AN vs. RR: $p<0.001$).The effect of condition was significant at the syllable frequency (F(3,57)=6.6, $p<0.001$), however none of the planned pairwise comparisons were significant. 
-\color{black}
-Individual participant data: there was some participant variability and not all participants exhibited statistically significant peaks in ITPC during each of the four conditions (Fig.~\ref{fig:Fig3}). In the AN and AV conditions, statistically significant peaks at the rate of syllable presentation were observed in 18/20 participants. In both the MP and RR conditions, the peak in ITPC at the rate of syllable presentation reached significance in 17/20 participants.
 
-When analysing the EEG responses of individual subjects at the rate of phrase presentation, a statistically significant peak was observed during the AN condition in 13/20 participants. A statistically significant peak in ITPC at the rate of phrase presentation was observed in 4/20 participants while they were listening to the AV condition, which was also the same during the MP and RR conditions. Thus the pattern observed in the grand averages can be seen in the majority of individual participants. 
+We next compared the ITPC values across the four conditions at the
+phrase rate using a Kruskal-Wallis test. The effect of
+condition was significant at the phrase frequency
+($p=0.003$). Two-sided pairwise Wilcoxon signed-rank test were
+performed on the phrase peaks to test the hypothesis that AN, AV and
+MP are significantly different to RR. In fact, AV and AN are both
+significantly higher than RR, $p=0.004$ in each case, but MP is
+not. We also tested the hypothesis that AN, AV and MP are sigificantly
+different, AN is significantly different to both AV and MP, with
+$p=0.012$ in both cases; AV and MP are not significantly different. In
+this exploratory analysis all $p$-values are reported
+uncorrected.
+
+
+In comparisons with RR only the 16 with RR data are used, if the
+comparisons between AN, AV and MP are restricted to these
+particpantthe results are largely unchanged, the $p$-values for the AN
+and AV comparisons with MP are $p=0.021$, the value for the Kruskal
+Wallis test is $p=0.012$. In the alternative analysis where IPTC is
+calculated using participants, the Kruskal Wallis test indicates a
+main effect of condition at the phrase rate. Since the streams are
+different across different conditions, pairwise comparisons we
+performed using a Mann-Whitney U-test; none of these comparisons
+showed any significant difference.
+
+
+Surprisingly the effect of condition on syllable frequency was close
+to significance ($p=0.051$) and the pair-wise tests indicate there is
+a difference between AN and AV, and RR and MP; this might indicate
+that the participants listened more attentively to the AN and AV
+stimuli.
+
+
+
+Individual participant data: there was some participant
+variability and not all participants exhibited statistically
+significant peaks in ITPC during each of the four conditions
+(Fig.~\ref{fig:Fig3}). In the AN and AV conditions, statistically
+significant peaks at the rate of syllable presentation were observed
+in 18/20 participants. In both the MP and RR conditions, the peak in
+ITPC at the rate of syllable presentation reached significance in
+17/20 participants.
+
+When analysing the EEG responses of individual subjects at the rate of
+phrase presentation, a statistically significant peak was observed
+during the AN condition in 13/20 participants. A statistically
+significant peak in ITPC at the rate of phrase presentation was
+observed in 4/20 participants while they were listening to the AV
+condition, which was also the same during the MP and RR
+conditions. Thus the pattern observed in the grand averages can be
+seen in the majority of individual participants.
 
 \begin{figure}[tbhp]
-\includegraphics[width=\linewidth]{Exp2_individual_results_bar_graphs_thick.png}
-\caption{Significance in ITPC at the phrase and syllable rates in individual subjects. z-scores for the ITPC at the two target frequencies: the syllable rate (black bars, 1/0.32 Hz) and phrase rate (gray bars, 1/0.64 Hz) in each of the four conditions (AN, AV, MP, RR). For each condition, z-score values of the ITPC at each frequency of interest are displayed for each of the 20 subjects. This facilitates comparison of individual subjects across target frequencies and across conditions. Participants one to 20 are ordered from left to right by the z-score of their ITPC at the phrase frequency during the AN condition (A, gray bars). Red dashed horizontal lines indicate the significance threshold ($p<0.05$, $z>1.96$) and so any z-score that is above this line represents a  ITPC that is significantly higher than chance level.}
+%\includegraphics[width=\linewidth]{Exp2_individual_results_bar_graphs_thick.png}
+\include{Figure_Individuals/individuals}
+  \caption{Significance in ITPC at the phrase and syllable rates in individual subjects. z-scores for the ITPC at the two target frequencies: the syllable rate (black bars, 1/0.32 Hz) and phrase rate (gray bars, 1/0.64 Hz) in each of the four conditions (AN, AV, MP, RR). For each condition, z-score values of the ITPC at each frequency of interest are displayed for each of the 20 subjects. This facilitates comparison of individual subjects across target frequencies and across conditions. Participants one to 20 are ordered from left to right by the z-score of their ITPC at the phrase frequency during the AN condition (A, gray bars). Red dashed horizontal lines indicate the significance threshold ($p<0.05$, $z>1.96$) and so any z-score that is above this line represents a  ITPC that is significantly higher than chance level.}
 \label{fig:Fig3}
 \end{figure}
 
