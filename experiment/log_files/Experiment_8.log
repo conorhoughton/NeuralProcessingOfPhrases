@@ -1,0 +1,9 @@
+Scenario - Amelia_Experiment2.sce
+Logfile written - 11/23/2018 14:25:12
+
+Trial	Event Type	Code	Time	TTime	Uncertainty	Duration	Uncertainty	ReqTime	ReqDur	Stim Type	Pair Index
+
+1	Response	1	63676	63343	1
+2	Response	1	255673	191861	2
+3	Response	1	326072	70323	2
+4	Sound	150	326583	358	1			0		other	0
