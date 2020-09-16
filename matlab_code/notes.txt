@@ -1,0 +1,35 @@
+
+This contains the matlab code we used to produce the Fourier coefficients.
+
+It ran on Matlab R2020a and Fieldtrip 20200607
+
+The directory locations will need to be updated to get it to run; because of its size our eeg files are stored in a seperate zenodo repository.
+
+____________________________________________
+
+
+step1_preprocessing.m
+
+this detrends / demeans / low passes the participant 5-20
+data and splits it into
+trials 1-144 it does ICA and removes ICA components that are dominated
+by the front channels
+
+step1_preprocessing_P1-4.m
+
+this does the same thing for the participant 1-4 data, here are there
+only 72 trials because only AVAV / ANAN / PHMI are processed because
+of the marker file errors in the other conditions
+
+in both cases trial 8 /38 / 68 / 98 / 128 / 158 are left out, these
+have marker problems for P1-4 and to make the data comparable for all
+participants this trial is excluded for P5-20 as well
+
+step2_ft.m
+
+this takes the Fourier transform; the Fourier coefficients are stored
+in big matrices in processed_data/ft
+
+At this point further analysis is done using julia in the ictp_code
+folder; this includes a programme that can load the big matrices of
+Fourier coefficients and split them up by condition

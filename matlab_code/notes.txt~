@@ -1,0 +1,76 @@
+
+
+step1_preprocessing.m
+
+this detrends / demeans / low passes the participant 5-20
+data and splits it into
+trials 1-144 it does ICA and removes ICA components that are dominated
+by the front channels
+
+step1_preprocessing.m
+
+this does the same thing for the participant 1-4 data, here are there
+only 72 trials because only AVAV / ANAN / PHMI are processed because
+of the marker file errors in the other conditions
+
+in both cases trial 8 /38 / 68 / 98 / 128 / 158 are left out, these
+have marker problems for P1-4 and to make the data comparable for all
+participants this trial is excluded for P5-20 as well
+
+step2_ft.m
+
+this takes the Fourier transform; the Fourier coefficients are stored
+in big matrices in processed_data/ft
+
+At this point further analysis is done using julia in the ictp_code
+folder; this includes a programme that can load the big matrices of
+Fourier coefficients and split them up by condition
+
+_____________________
+
+The above describes the reanalysis of the data we did after the marker
+problem was spotted, below are rough notes taken during this process
+of reanalysis. This notes are of no interest now.
+
+
+the test* programmes in the test folder were used to build the workflow but applied to a single file
+
+the order is
+
+test_preprocessing.m            - old "Step1"
+test_remove_components.m        - old "Step2"
+test_fg.m                       - old "Step3"
+	
+these follow Amelia in doing the ICA on a per-condition basis. To fix
+this there is
+
+new_test_preprocessing.m - combines "Step1" and "Step2" but does blink
+removal all in one go
+
+________________
+
+
+note
+
+- in addition to removing front dominated components there used to be a left
+  and right condition, it isn't mentioned in the paper so it has been
+  removed.
+
+- the comp.topo object is the mixing matrix - this was for eye
+  blink removal but I think it should be unmixing matrix
+
+  if c is the components and e the eeg then the ICA assumes e=Mc where
+  M is the mixing matrix whereas c=We where W is the unmixing matrix
+  if c is 30d and e is 32d then W is 30X32 and a row of W gives the
+  weighting of each electrode in the component, which is what we want,
+  except we need to also have the power of each electrode - this
+  doesn't really make sense since the electrodes are correllated so
+  the power of the component is not the weighted sum of the power of
+  the electrodes!
+
+
+todo
+
+- check the remove components correctly identifies front channels - DONE
+
+- the ica and blink removal shouldn't be done on a per-condition fashion - DONE
