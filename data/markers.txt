@@ -1,0 +1,57 @@
+
+
+The original markers had a number of mistakes; there were problems
+with the number of ADVP and the key presses overlapped with ADVP. This
+was corrected by hand in the vmkr files.
+
+There were additional problems with P1-4 which meant that the #8
+stream for each condition was not useable and rrrr was not fixeable
+for these participants.
+
+_____________________________
+
+
+advp   0- 24
+rrrv  30- 54
+rrrr  60- 84
+avav  90-114
+anan 120-144
+phmi 150-174
+
+buttons
+201 / 202 / 203
+
+201 - enter
+202 - y
+203 - n
+______________________________
+
+
+P5-20 are fully corrected
+
+P1-4 have problems that mean the marker files haven't been corrected
+for all conditions; they are corrected for avav / anan / phmi
+
+P1-4 have a problem with trial 8 / 38 / 68 / 98 / 128 / 158 so to use
+all 20 participants for avav / anan / phmi these trials were ignored
+for all participants.
+
+_______________________________
+
+before correction
+
+ADVP 1-11 / 22-29 / 20-25
+rrrV  30- 54
+rrrr  60- 84
+AVAV  90-114
+ANAN 120-144
+phmi 150-174
+
+before correction the button presses were number 1-3 and these were corrected
+
+sed 's/S  1/S201/g' foo | sed 's/S  2/S202/g' | sed 's/S  3/S203/g' > bar
+
+and then by hand return the ADVP trials to their proper number.
+
+
+
