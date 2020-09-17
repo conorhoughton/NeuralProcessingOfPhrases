@@ -3,6 +3,8 @@ These programmes generally load the large Fourier coefficient matrices
 that have been created by the "step2" matlab programme. They have
 paths that will need to be adjusted.
 
+Follwing my usual bad habit these programmes don't save any files,
+they print to screen so the output can be sent to file by a > direct.
 
 itpc.jl this is the main programme, it loads the data, organizes it
 and works out the ITPC - it also does various bit of stats and output
