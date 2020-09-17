@@ -1,0 +1,19 @@
+
+#2020-08-17
+
+this is the phase angle ($3) and length ($4) of the mean resultant
+labelled by participant ($1) and electrode ($2)
+
+from circularMeasures.jl
+
+NB - this is before changing the EEG exclusion criterion to not use
+coeff squared
+
+_________
+
+example plot
+
+set palette model RGB defined (1 'red', 2 'blue', 3 'red', 4 'red', 5 'green', 6 'blue', 7 'blue', 8 'red', 9 'red', 10 'blue', 11 'blue', 12 'red', 13 'red', 14 'green', 15 'red', 16 'red', 17 'blue', 18 'blue', 19 'red', 20 'blue', 21 'blue', 22 'blue', 23 'red', 24 'red', 25 'green', 26 'blue', 27 'blue', 28 'red', 29 'red', 30 'green', 31'blue', 32 'blue')
+
+
+plot "circular_values.txt" us (($1)+($4)):3:(int($2)) with points palette

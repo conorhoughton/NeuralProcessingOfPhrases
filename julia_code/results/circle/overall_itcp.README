@@ -1,0 +1,1 @@
+awk '{a[$1]+=$4}END{for(i=1;i<17;i++){for(j=0;j<32;j++){print a[i]/16}}}' < circular_values.txt > overall_itcp.txt

@@ -1,0 +1,4 @@
+
+like circular_values.txt but with the per participant
+electrode-averaged ITCP as an extra column ($1) and sorted on that
+column.
