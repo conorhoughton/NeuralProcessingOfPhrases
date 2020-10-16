@@ -17,11 +17,13 @@
 \contourlength{0.8pt}
 
 \newcommand{\myuline}[1]{%
-  \uline{\phantom{#1}}%
-  \llap{\contour{white}{#1}}%
+  \uline{\phantom{\texttt{#1}}}%
+  \llap{\contour{white}{\texttt{#1}}}%
 }
 
-
+\newcommand{\tts}{%
+  \texttt{\,}
+}
 
 % amsmath and amssymb packages, useful for mathematical formulas and symbols
 \usepackage{amsmath,amssymb}
@@ -135,7 +137,7 @@
 % Title must be 250 characters or less.
 \begin{flushleft}
 {\Large
-\textbf\newline{Grammar, lexical category and the neural processing of phrases} 
+\textbf\newline{Grammar category and the neural processing of phrases} 
 }
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
@@ -145,10 +147,12 @@ Nina Kazanina\textsuperscript{2,3},
 Conor Houghton\textsuperscript{1}
 \\
 \bigskip
-\textsuperscript{1}Department of Computer Science, University of Bristol, UK\\
-\textsuperscript{2}School of Psychological Science, University of Bristol, UK\\
-\textsuperscript{3}Centre for Cognition and Decision making, Institute for Cognitive Neuroscience, National Research University Higher School of Economics, Russian Federation
-\\
+\textsuperscript{1}Department of Computer Science, University of
+Bristol, UK\\ \textsuperscript{2}School of Psychological Science,
+University of Bristol, UK\\ \textsuperscript{3}International
+Laboratory of Social Neurobiology, Institute for Cognitive
+Neuroscience, National Research University Higher School of Economics,
+Russian Federation \\
 \bigskip
 
 % Use the asterisk to denote corresponding authorship and provide email address in note below.
@@ -160,9 +164,7 @@ Conor Houghton\textsuperscript{1}
 \section*{Acknowledgements}
 CJH and AB acknowledge support through a James S. McDonnell Foundation
 Scholar Award in Cognition (JSMF \#220020239). NK acknowledges the
-support by the HSE Basic Research Program and the Russian Academic
-Excellence Project '5-100'
-
+support of the HSE RF Government grant 075-15-2019-1930.
 
 % Please keep the abstract below 300 words
 \section*{Abstract}
@@ -173,22 +175,23 @@ debate. Recently, the cortical response to a frequency-tagged
 linguistic stimulus has been shown to track the rate of phrase and
 sentence, as well as syllable, presentation. This could be interpreted
 as evidence for the hierarchical processing of speech, or as a
-response to the repetition of lexical category. To examine the extent
+response to the repetition of grammatical category. To examine the extent
 to which hierarchical structure plays a role in language processing we
 record EEG from human participants as they listen to isochronous
 streams of monosyllabic words. Comparing responses to sequences in
-which lexical category is strictly alternating and chosen such that
+which grammatical category is strictly alternating and chosen such that
 two-word phrases can be grammatically constructed --- ``cold food loud
 room'' --- or is absent --- ``rough give ill tell'' --- showed
 cortical entrainment at the two-word phrase rate was only present in
-the grammatical condition. Thus, lexical category repetition alone
-does not yield entertainment at higher level than a word. On the other
-hand, no cortical entrainment was found for the mixed-phrase condition
-that contained two-word phrases but no lexical category repetition ---
-``that word send less'' --- as one would expect if the measured
-entrainment reflected purely abstract hierarchical syntactic
-units. Our results support a model in which word-level lexical
-category information is required to build larger units.
+the grammatical condition. Thus, grammatical category repetition alone
+does not yield entertainment at higher level than a word. NEED TO
+REPHRASE THIS: On the other hand, no cortical entrainment was found
+for the mixed-phrase condition that contained two-word phrases but no
+grammatical category repetition --- ``that word send less'' --- as one
+would expect if the measured entrainment reflected purely abstract
+hierarchical syntactic units. Our results support a model in which
+word-level grammatical category information is required to build larger
+units.
 
 
 \section*{Introduction}
@@ -199,7 +202,7 @@ hierarchical syntactic structure during this processing is the subject
 of an ongoing debate with, on the two extremes, some arguing that full
 hierarchical analysis is central to sentence comprehension
 \citet{Chomsky1995,BerwickEtAl2013, EveraertEtAl2015}, while others
-claim that hierarchical representations are not always required
+claim that hierarchical representations are non-essential
 \cite{FrankEtAl2012, FrankBod2011, FrankYang2018,
   FrankChristiansen2018}.
 
@@ -241,15 +244,14 @@ comprehension (Fig.~\ref{fig:freq_tree}).
   presented at a rate of 1/0.32 Hz.  The sentence is described using a
   hierarchical tree that splits the sentence first into a noun phrase
   and a verb phrase and then into words. This is a particularly simple
-  tree, more complex trees may have more branches and not all words
-  will be the same distance from the sentence root. This simple
+  tree, more complex trees may have more branches. This simple
   structure is convenient for frequency tagging and the different
-  frequencies corresponding to the three levels of the tree; sentence,
-  phrase and word, have been marked here. Our own experiments employed
-  an even simpler structure with only phrases and words.}
+  frequencies corresponding to the three levels of the tree, sentence,
+  phrase and word, have been marked here.}
 \label{fig:freq_tree}
 \end{figure}
 
+WE NEVER DESCRIBE DING RESULTS
 
 However, it has also been suggested that the brain could rely on
 simpler, potentially more generic, strategies underpinned by
@@ -262,77 +264,95 @@ vectors \cite{MikolovEtAl2013,Bojanowski2017}. In skipgram, word2vec
 vectors are calculated by training a simple linear neural network with
 one hidden layer; the input and output layers both correspond to words
 and the network is trained on the task of predicting, from a given
-one-hot input word, the unordered list of words that occur in
-proximity to it in text. The components of the word2vec vector for a
-given word are the weights feeding forwards from the word to the
-hidden layer. Words that are likely to occur in a similar context have
-similar representations in the hidden layer and hence are associated
-with similar word2vec vectors. To a striking degree these
-high-dimensional vectors have specific directions that serve, at least
-locally, to represent specific concepts, so that, for example, the
-same direction that leads from ``big'' to ``biggest'' leads from
-``small'' to ``smallest'' \cite{MikolovEtAl2013b, MikolovEtAl2013c}.
+input word, the unordered list of words that occur in proximity to it
+in text. The components of the word2vec vector for a given word are
+the weights feeding forwards from the word to the hidden layer. Words
+that are likely to occur in a similar context have similar
+representations in the hidden layer and hence are associated with
+similar word2vec vectors. To a striking degree these high-dimensional
+vectors have specific directions that serve, at least locally, to
+represent specific concepts, so that, for example, the same direction
+that leads from ``big'' to ``biggest'' leads from ``small'' to
+``smallest'' \cite{MikolovEtAl2013b, MikolovEtAl2013c}.
 
 In \citet{FrankYang2018} fictive EEG signals representing experimental
 trials are constructed from the word2vec vectors for each stimulus. In
-each trial 320 copies of the vector for each word are lined up
-side-by-side forming the columns of a matrix; each column representing
-1 ms of the stimulus. The rows of this matrix is then treated as a EEG
-and this fictive signal is analysed in the same way as the real EEG
-signal is with measure of the evoked response averaged over rows, much
-as we average over individual electrodes. This simulated EEG signal
-demonstrates the same entrainment to words, phrases and sentences as
-the real signal. Since the high-dimensional word2vec vectors represent
-single words only and do not explicitly encode information about word
-sequences, this demonstrates that semantic relationships that can be
-deduced from a text corpus are enough to explain the ITPC peaks seen
-in the real experiment, without any need to invoke the hierarchical
-structure of the sentence.
+the EEG experiment each word is presented for 320 ms and so, in the
+ficitive data 320 copies of the vector for each word are lined up
+side-by-side forming the columns of a matrix so each column
+represents 1 ms of the stimulus. The rows of this matrix is then
+treated as a EEG and this fictive signal is analysed in the same way
+as the real EEG signal is with measure of the evoked response averaged
+over rows, much as we average over individual electrodes. This
+simulated EEG signal demonstrates the same entrainment to words,
+phrases and sentences as the real signal. Since the high-dimensional
+word2vec vectors represent single words only and do not explicitly
+encode information about word sequences, this demonstrates that
+semantic relationships that can be deduced from a text corpus are
+sufficient to explain the ITPC peaks seen in the real experiment, without
+any need to invoke the hierarchical structure of the sentence.
 
 The current study aims to elucidate the importance of hierarchical
 structure during language processing using EEG. We recorded neural
 activity from 20 participants while they listened to streams of
 two-word sequences from four different conditions:
 \begin{enumerate}
-    \item[AN:] repetition of adjective-noun sequences, 
-    \item[AV:] repetition of adjective-verb sequences, 
-    \item[MP:] repetition of grammatical two-word phrases with varying lexical categories, 
-    \item [RR:] random word order; no phrases possible.
+    \item[AN] (adjective-noun): repetition of adjective-noun sequences, 
+    \item[AV] (adjective-verb): repetition of adjective-verb sequences, 
+    \item[MP] (mixed phrase): repetition of grammatical two-word phrases with varying lexical categories, 
+    \item [RR] (random): random word order; no phrases possible.
 \end{enumerate}
 In the AN and AV conditions, lexical categories occurred at a regular
 rate, so adjectives, nouns or verbs were repeated every other
 word. However the stream could only be parsed into grammatical phrases
 in the AN condition, for example:
-\begin{quote}
-\myuline{cold food} \myuline{loud room} \myuline{tall girl}
-\end{quote}
+\begin{center}
+  \begin{tabular}{cl}
+   &\texttt{A}\tts\tts{}\tts{}\tts{}\texttt{N}\tts\tts{}\tts{}\tts{}\texttt{A}\tts\tts{}\tts{}\tts{}\texttt{N}\tts\tts{}\tts{}\tts{}\texttt{A}\tts\tts{}\tts{}\tts{}\texttt{N}\\ 
+AN:&\myuline{cold food}\tts\myuline{loud room}{}\tts\myuline{tall girl}
+\end{tabular}
+  \end{center}
 where underlining indicates grammatical phrases. In the AV condition, no such grammatical phrases
 could be formed, as in the example:
-\begin{quote}
-  rough give ill tell thin chew.
-\end{quote}
+\begin{center}
+  \begin{tabular}{cl}
+   &\texttt{A}\tts\tts{}\tts{}\tts{}\tts{}\texttt{V}\tts\tts{}\tts{}\tts{}\texttt{A}\tts{}\tts{}\tts{}\texttt{V}\tts\tts{}\tts{}\tts{}\texttt{A}\tts\tts{}\tts{}\tts{}\texttt{V}\\ 
+AV:&\texttt{rough give}\tts\texttt{ill tell}{}\tts\texttt{thin chew}
+\end{tabular}
+  \end{center}
 In the MP condition, grammatical two-word phrases could be formed, but
-lexical category occurred with no regularity, for example
-\begin{quote}
-\myuline{that word} \myuline{send less} \myuline{too
-  loud}.
-\end{quote}
+grammatical category occurred with no regularity, for example
+\begin{center}
+  \begin{tabular}{cl}
+   &\texttt{Det}\tts{}\tts{}\texttt{N}\tts\tts{}\tts{}\tts{}\texttt{V}\tts{}\tts\tts{}\tts{}\texttt{P}\tts\tts{}\tts{}\tts{}\texttt{Adv}\tts{}\texttt{V}\\ 
+AV:&\myuline{that word}\tts\myuline{send less}{}\tts\myuline{too loud}
+\end{tabular}
+\end{center}
+and, finally, in the RR condition there are neither grammatical phrases not any regularity
+\begin{center}
+  \begin{tabular}{cl}
+   &\texttt{Pre}\tts{}\tts{}\texttt{V}\tts\tts\tts{}\tts{}\tts{}\texttt{A}\tts{}\tts\tts{}\tts{}\texttt{P}\tts{}\tts{}\tts{}\texttt{V}\tts\tts\tts{}\texttt{Det}\\ 
+AV:&\texttt{from solve}\tts\texttt{good him}{}\tts\texttt{ask an}
+\end{tabular}
+\end{center}
 
 As in \cite{DingEtAl2017} the principle measure of response used here
 is the inter-trial phase coherence (ITPC); this quantifies the
 clustering of phases across trials at a given frequency. According to
 the hierarchical account we would expect a peak in ITPC at the phrase
-rate in both the AN and MP conditions, but no corresponding peak in
-ITPC in the AV or RR condition. A sequential account of language
-processing that relies primarily upon word-level statistics would
-instead predict a peak in ITPC at the phrasal rate in both the AN and
-AV conditions.
+rate in both the AN and MP conditions, but no peak in ITPC in the AV
+or RR condition. A sequential account of language processing that
+relies primarily upon word-level statistics would instead predict a
+peak in ITPC at the phrasal rate in both the AN and AV conditions: our
+stimulus has been designed so that the peak calculated using the
+fictive EEG simulated from word2vec gives similar phrase peaks in the
+AN and AV conditions.
 
 Anticipating the main results, a peak in ITPC at the phrasal rate was
-only observed in the current study in the AN condition and the ITPC at
+not observed in the current study in the AV condition and the ITPC at
 the phrasal rate was significantly bigger for AN than for any of the
 other conditions, suggesting that neural entrainment cannot be
-explained solely by hierarchical accounts or lexical category
+explained solely by hierarchical accounts or grammatical category
 regularity; rather, it additionally calls for higher level, syntactic
 representations. Our results support a language system that exploits
 both linear and hierarchical operations of language inputs to generate
@@ -340,25 +360,8 @@ meaning.
 
 
 \section*{Results}
-In each of the four conditions, the simulated EEG calculated from the
-word2vec representation yields a peak in ITPC of the simulated EEG
-responses at the rate of syllable presentation (1/0.32 Hz,
-Fig.~\ref{fig:Fig1}. The model also yields a peak in ITPC at the rate
-of phrase presentation (1/0.64 Hz) for the AN and AV conditions
-(~\ref{fig:Fig1}, where, respectively, the grammatical adjective-noun
-phrases or the ungrammatical adjective-verb sequences were repeatedly
-presented. As described in the Methods, the AN and AV trials were
-designed so that the vectors corresponding to successive words have
-similar distances in both of these conditions and the AN and AV
-conditions show similar peaks at the phrase frequency, even though one
-condition is grammatical and the other is not. The model also shows a
-pronounced, but lower amplitude peak in ITPC at the rate of phrase
-presentation during the MP condition. The peak in ITPC at the rate of
-phrase presentation is absent for a random condition produced by
-shuffling words in the RR condition.
 
-
- \begin{figure}[tbhp]
+\begin{figure}[tbhp]
 %\includegraphics[width=\linewidth]{FrankFigure_exp2_phrases_12_03_2020.png}
 \include{./Figure_Simulated/simulated}
 \caption{ITPC of the simulated EEG calculated from the word2vec
@@ -372,48 +375,60 @@ shuffling words in the RR condition.
 \label{fig:Fig1}
 \end{figure}
 
+The simulated EEG calculated from the word2vec representation yields a
+peak in ITPC of the simulated EEG responses at the rate of syllable
+presentation (1/0.32 Hz, Fig.~\ref{fig:Fig1} in each of the four
+conditions. The model also yields a peak in ITPC at the rate of phrase
+presentation (1/0.64 Hz) for the AN and AV conditions
+(~\ref{fig:Fig1}), where, respectively, the grammatical adjective-noun
+phrases or the ungrammatical adjective-verb sequences were repeatedly
+presented. As described in the Methods, the AN and AV trials were
+designed so that the vectors corresponding to successive words have
+similar distances in both of these conditions and the AN and AV
+conditions show similar peaks at the phrase frequency, even though one
+condition can be parsed into grammatical two-word phrases and the
+other cannot. The model also shows a pronounced, but lower amplitude
+peak in ITPC at the rate of phrase presentation during the MP
+condition. The phrase peak is absent from an version of the RR condition in which
+words are shuffled at random.
+
 In line with the prediction from the simulated data, EEG responses
 from human participants showed a highly significant peak ($p<10^{-6}$)
 in ITPC at the rate of syllable presentation (1/0.32 Hz) in all
-conditions tested (Fig.~\ref{fig:Fig2}). At the rate of phrase
-presentation (1/0.64 Hz) only the AN condition shows an unambiguous
-response; this condition is the one where the phrases are
-grammatically well formed and which has all the phrases are in the
-same lexical category. For the AN condition the peak at the phrase
-rate is highly significant ($p<10^{-6}$) whereas, while there is some
-evidence of a peak for the MP and AV conditions, this evidence is
-marginally, or not, significant ($p=0.42$ and $p=0.63$ respectively);
-for RR there is no evidence of a phrase response, $p=0.36$. A
-reduction in the amplitude of ITPC peaks at the phrase rate for the MP
-and RR conditions, when compared to the AN condition, is consistent
-with the simulated data, but the absense of a significant peak in the
-AN condition is not.
+conditions tested (Fig.~\ref{fig:Fig2}). There was a highly prominent
+peak at the phrase rate (1.5625Hz) in the AN condition ($p<10^{-6}$),
+and a much less prominent yet still significant peak in the MP
+condition ($p=0.042$). The phrase peak was marginally significant in
+the AV condition ($p=0.063$). For the RR condition no evidence of a
+phrase-level response was found ($p=0.36$). A reduction in A reduction
+in the amplitude of ITPC peaks at the phrase rate in the MP condition
+when compared to the AN condition, and its absence in the RR
+condition, is consistent with the simulated data, but the absense of a
+significant peak in the AV condition is not.
 
 As described in the Methods section, data for the AN, AV and MP
 conditions come from 20 participants, there is only data for the
 control RR condition for 16 of these. Restricting the analysis to
 these 16 participants does not change the conconclusions from these
 results; on 16 participants the peaks at the rate of syllable
-presentatioon are highly significant ($p<10^{-6}$) for all
-participants; the phrase peak is still highly significant for the AN
-condition, the AV condition is marginally significant ($p=0.44$), the
-MP condition has $p=0.15$ and RR, $p=0.38$.
+presentatioon are significant ($p<10^{-6}$) for all participants; the
+phrase peak is highly significant for the AN condition ($p<10^{-6}$),
+the AV condition is significant ($p=0.044$), the MP condition has
+$p=0.15$ and RR, $p=0.38$.
 
-As an alternative to a statistical approach in which the streams are
-the `trials' used to calculate the ITPC and statistics are computed
-using participants as items; we also performed the same analysis using
-different participants as the `trials' to calculate the ITPC and
-streams as items. In this approach the ITPC calculation produces far
-smaller peaks because there is a difference in the phase of responses
-from participant to participant so the phase coherence measure both
-the variability of the response to stimulus, which we are interested
-in, as well as the less interesting variability in phase due to
-differences between the participants, for example, in their head shape
-and size. Nonetheless, the result is somewhat similar: there are
-highly significant peaks at the syllable rate ($p<10^{-6}$) and at the
-phrase rate for $AN$: $p=1.69\times 10^{-5}$; whereas the AV and MP
-conditions show no peaks; this analysis was not performed on the
-control RR condition since it has a different number of participants.
+We have also performed an additional, `by item' analysis with streams
+used as item, the ITCPs were averaged across participants to produce
+an average value for each stream for each condition. In this approach
+far smaller ITCP peaks were expected because of the likely differences
+in the phase of responses from participant to participant. In the `by
+item' analysis the ITCP included both the variability of the response
+to stimulus, which we are interested in, as well as the less
+interesting variability in phase due to differences between the
+participants, for example, in their head shape and size. Nonetheless,
+the result is somewhat similar: there are significant peaks at the
+syllable rate ($p<10^{-6}$) and at the phrase rate for $AN$:
+$p=1.69\times 10^{-5}$; whereas the AV, AN and RR conditions show no
+peaks.
 
 \begin{figure}[tbhp]
 \include{Figure_ITPC/itpc}
@@ -431,10 +446,9 @@ control RR condition since it has a different number of participants.
   frequency at which syllables and two-word sequences are presented.}
 \label{fig:Fig2}
 \end{figure}
-\color{blue}
 
-We next compared the ITPC values across the four conditions at the
-phrase rate using a Kruskal-Wallis test. The effect of
+In order to directly compare the ITPC values at the phrase rate across
+the four conditions, Kruskal-Wallis test was used. The effect of
 condition was significant at the phrase frequency
 ($p=0.003$). Two-sided pairwise Wilcoxon signed-rank test were
 performed on the phrase peaks to test the hypothesis that AN, AV and
@@ -444,51 +458,45 @@ not. We also tested the hypothesis that AN, AV and MP are sigificantly
 different, AN is significantly different to both AV and MP, with
 $p=0.012$ in both cases; AV and MP are not significantly different. In
 this exploratory analysis all $p$-values are reported
-uncorrected.
+uncorrected. comparisons between AN, AV and MP are restricted to these
+particpant the results are largely unchanged (see Supplementary
+Information).
+
+Surprisingly the effect of condition on syllable frequency was
+marginally significant ($p=0.051$) and the pair-wise tests indicate
+that AV is different from RR ($p=0.0042$) and both AV ($p=0.041$) and
+AN ($p=0.0025$) are different from MP. This might indicate that the
+participants listened more attentively to the AN and AV stimuli.
 
 
-In comparisons with RR only the 16 with RR data are used, if the
-comparisons between AN, AV and MP are restricted to these
-particpantthe results are largely unchanged, the $p$-values for the AN
-and AV comparisons with MP are $p=0.021$, the value for the Kruskal
-Wallis test is $p=0.012$. In the alternative analysis where IPTC is
-calculated using participants, the Kruskal Wallis test indicates a
-main effect of condition at the phrase rate. Since the streams are
-different across different conditions, pairwise comparisons we
-performed using a Mann-Whitney U-test; none of these comparisons
-showed any significant difference.
-
-
-Surprisingly the effect of condition on syllable frequency was close
-to significance ($p=0.051$) and the pair-wise tests indicate there is
-a difference between AN and AV, and RR and MP; this might indicate
-that the participants listened more attentively to the AN and AV
-stimuli.
-
-
-
-Individual participant data: there was some participant
-variability and not all participants exhibited statistically
-significant peaks in ITPC during each of the four conditions
-(Fig.~\ref{fig:Fig3}). In the AN and AV conditions, statistically
-significant peaks at the rate of syllable presentation were observed
-in 18/20 participants. In both the MP and RR conditions, the peak in
-ITPC at the rate of syllable presentation reached significance in
-17/20 participants.
+Figure~\ref{fig:Fig3} shows individual particpants ITPCs for each
+condition. Statistically significant peaks at the rate of syllable
+presentation were observed in all participants in the AN and AV
+conditions, 19/20 participants in the MP condition and 15/16 in the RR
+condition.
 
 When analysing the EEG responses of individual subjects at the rate of
-phrase presentation, a statistically significant peak was observed
-during the AN condition in 13/20 participants. A statistically
-significant peak in ITPC at the rate of phrase presentation was
-observed in 4/20 participants while they were listening to the AV
-condition, which was also the same during the MP and RR
-conditions. Thus the pattern observed in the grand averages can be
-seen in the majority of individual participants.
+phrase presentation, a statistically significant peak was observed in
+14/20 participants in the AN condition, in 7/20 participants in the AV
+condition, 9/20 in the MP and 3/16 in the RR conditions. Thus the
+pattern observed in the grand averages can be seen in the majority of
+individual participants.
 
 \begin{figure}[tbhp]
 %\includegraphics[width=\linewidth]{Exp2_individual_results_bar_graphs_thick.png}
 \include{Figure_Individuals/individuals}
-  \caption{Significance in ITPC at the phrase and syllable rates in individual subjects. z-scores for the ITPC at the two target frequencies: the syllable rate (black bars, 1/0.32 Hz) and phrase rate (gray bars, 1/0.64 Hz) in each of the four conditions (AN, AV, MP, RR). For each condition, z-score values of the ITPC at each frequency of interest are displayed for each of the 20 subjects. This facilitates comparison of individual subjects across target frequencies and across conditions. Participants one to 20 are ordered from left to right by the z-score of their ITPC at the phrase frequency during the AN condition (A, gray bars). Red dashed horizontal lines indicate the significance threshold ($p<0.05$, $z>1.96$) and so any z-score that is above this line represents a  ITPC that is significantly higher than chance level.}
+\caption{ITPC responses from individual participants at the phrase
+  rate (3.125 Hz; filled bars) and the syllable rate (1.5625 Hz;
+  unfilled bars) in each of the four conditions (AN, AV, MP, RR). For
+  the AN, AV and MP conditions, values of the ITPC at each frequency
+  of interest are displayed for each of the 20 participants, for RR,
+  for the 16 participants. Participants one to 20 are ordered in
+  accordance to their ITPC at the phrase frequency in the AN condition
+  (in the increasing order from left to right). Red horizontal lines
+  indicate the mean ITPC value for random phases along with the
+  corresponding significance thresholds (p < 0.05) and so any ITPC
+  that is above the upper red line is significantly higher than chance
+  level.}
 \label{fig:Fig3}
 \end{figure}
 
@@ -496,11 +504,60 @@ seen in the majority of individual participants.
 \section*{Discussion}
 
 
-The current study investigated whether, and to what extent, syntactic structure is automatically utilised by the brain during language comprehension, over and above processing at the lexical level. It was found that repetitive presentation of grammatically well-formed, two-word adjective-noun phrases yields a peak in ITPC at the rate of phrase presentation, but that repetitive presentation of two-word adjective-verb sequences that cannot be combined into a phrase does not yield such a peak. The amplitude of this peak, as well as the syllable peak in response to single words, is consistent with previous findings \citet{DingEtAl2017}. This provides support for a syntactic operation that enables combining of words into higher-level syntactic units and suggests that the processing of linguistic input involves levels of abstraction beyond word-level lexical-category information. The finding supports classical syntax-based approaches to language \citet{BerwickEtAl2013,EveraertEtAl2015,Chomsky1995}. It is also generally compatible with the proposal that higher-level chunking of smaller language units occurs during language processing \citet{ChristiansenChater2016}, although the nature of what the chunks are remains somewhat unclear.
+The current study investigated whether, and to what extent, syntactic
+structure is automatically utilised by the brain during language
+comprehension, over and above information about grammatical
+category. It was found that repetitive presentation of grammatically
+well-formed, two-word adjective-noun phrases yields a peak in ITPC at
+the rate of phrase presentation, but that repetitive presentation of
+two-word adjective-verb sequences that cannot be combined into a
+phrase does not yield such a peak. The amplitude of the AN peak, as well
+as the syllable peak in response to single words, is consistent with
+previous findings \citet{DingEtAl2017}. This provides support for a
+syntactic operation that enables combining of words into higher-level
+syntactic units and suggests that the processing of linguistic input
+involves levels of abstraction beyond word-level lexical-category
+information. The finding supports classical syntax-based approaches to
+language \citet{BerwickEtAl2013,EveraertEtAl2015,Chomsky1995}. It is
+also generally compatible with the proposal that higher-level chunking
+of smaller language units occurs during language processing
+\citet{ChristiansenChater2016}, although the nature of what the chunks
+are remains somewhat unclear.
 
-The distributional semantics model predicts a similar peak in ITPC at the rate of phrase presentation during both the AN and AV conditions. However, despite similarity in distributional vector space for the AN and AV conditions, the ITPC peak at the rate of phrase presentation was absent in the AV condition in the experimental recording. This suggests that the brain's response is not merely a function of lexical category; rather, it also reflects higher-level syntactic constituency.
+The distributional semantics model predicts a similar peak in ITPC at
+the rate of phrase presentation during both the AN and AV
+conditions. However, despite similarity in distributional vector space
+for the AN and AV conditions, the ITPC peak at the rate of phrase
+presentation was absent in the AV condition in the experimental
+recording. This suggests that the brain's response is not merely a
+function of grammatical category; rather, it also reflects
+higher-level syntactic constituency.
 
-However, no significant peak in ITPC at the rate of phrase presentation was found in response to the MP condition with contained repeated presentation of grammatically well-formed phrases with words from different lexical categories. While the difference we observe between the response to AN and AV sequences indicates a neural response to grammatical structure, there is no significant phrase rate response to the MP condition even though it is composed of grammatical two-word phrases. To the extent that each phrase involves combining two words into a single syntactic unit, there is a clear regularity in the MP condition at the syntactic level. Yet, this in itself is not sufficient to yield a peak in the ITPC. This might indicate that the response is not sufficiently abstract to reflect repetition of syntactic constituents independent of their lexical properties; for example, the phrases differ in the location of their head; determiner-noun phrases have the head after the modifier (``that word'') while preposition-noun phrases have their head before (``send less''). According to this interpretation, the phrase-level response found in the AN condition cannot be interpreted generally as a reflection of the Merge operation \citet{Chomsky1995} in its most general form: in both the AN and MP conditions words are pairwise merged into a phrase, but the ITPC peak only occurs in the former case.
+However, no significant peak in ITPC at the rate of phrase
+presentation was found in response to the MP condition which contained
+repeated presentation of grammatically well-formed phrases with words
+from different lexical categories. While the difference we observe
+between the response to AN and AV sequences indicates a neural
+response to grammatical structure, there is no significant phrase rate
+response to the MP condition even though it is composed of grammatical
+two-word phrases. To the extent that each phrase involves combining
+two words into a single syntactic unit, there is a clear regularity in
+the MP condition at the syntactic level. Yet, this in itself is not
+sufficient to yield a peak in the ITPC. This might indicate that the
+response is not sufficiently abstract to reflect repetition of
+syntactic constituents independent of their lexical properties; for
+example, the phrases differ in the location of their head;
+determiner-noun phrases have the head after the modifier (\texttt{that
+word}) while preposition-noun phrases have their head before (\texttt{send
+less}). According to this interpretation, the phrase-level response
+found in the AN condition cannot be interpreted in its entirety as a
+reflection of the Merge operation \citet{Chomsky1995} in its most
+general form: in both the AN and MP conditions words are pairwise
+merged into a phrase, but the ITPC peak only occurs in the former
+case.
+
+%"Cite Tavano's draft when it's accepted - they make a similar point
+%(Nina check with Aless first)"
 
 Another explanation for the lack of a significant peak in the response
 to the MP condition is that trials for this condition is more
@@ -509,7 +566,7 @@ investigate this we performed a behavioural study in which subjects
 listened to a stimulus modelled on our EEG stimulus with trials for
 the AN, MP and RR condition. After the last stream they were asked to
 indicate whether they thought the last stream was composed of two-word
-phrases or random words. The order of the streams were randomized, so
+phrases or random words. The order of the streams was randomized, so
 a subject had an equal chance of being asked this question about an
 AN, MP or RR trial; in fact there were 33 subjects asked about an AN
 trial, 27 about an MP trial and 28 about an RR trial. For AN
@@ -529,18 +586,17 @@ trials.
 
 
 Certainly, any model of language comprehension must exploit linear and
-hierarchical structures and describe how the brain uses different
-types of evidence: lexical, semantic and grammatical, in deducing
+hierarchical factors and describe how the brain uses different types
+of evidence: lexical, syntactic and semantic, in deducing
 meaning. While these different elements had seemed difficult to
 reconcile, recent neural network models with a linear temporal
 structure are able to discover and encode hierarchical structure, see
 \citet{LakretzEtAl2019,Baroni2019} for example. These models are
 consistent with the results outlined in the current study. Here we
-present evidence that words are sequentially combined by the brain
-into phrases and that syntactical information is important for the
-brain's response to language; this indicates that hierarchical
-structure is deduced and classified, at least in part, based on
-syntactical information.
+present evidence that words are combined by the brain into phrases and
+that syntactic information is important for the brain's response to
+language; this indicates that hierarchical structure is deduced and
+classified, at least in part, based on syntactical information.
 
 
 One issue with frequency tagging experiments, like the one presented
@@ -552,19 +608,19 @@ possible that the frequency tag is driven by regularities in ERPs in
 response to individual words or their
 combination. \citet{PulvermullerEtAl2002} argues that specific
 networks of neurons may be sensitive to sequences of words from
-discrete lexical categories. In this way, local networks of neurons
-could learn to become sensitive to activation by a sequence of
+discrete grammatical categories. In this way, local networks of
+neurons could learn to become sensitive to activation by a sequence of
 elements from different groups, for example an adjective followed by a
 noun, as in the AN condition presented in this study. This could
-explain why we only see ITPC at the phrase rate following repetitive
-presentation of phrases from the same syntactic class
-(AN). Syntactically similar adjective-noun phrases would repetitively
+explain why we see a larger ITPC at the phrase rate following
+repetitive presentation of phrases of the same type
+(AN). Syntactically similar adjective-noun sequences would repetitively
 and consistently activate the same sequence-detecting network of
 neurons responsible for processing adjective-noun phrases, whereas
-presentations of a mixture of different syntactic phrases would
+presentations of a mixture of different types of phrases would
 activate a different network of sequence-detecting neurons and thus
-generate an inconsistent EEG response and no peak in ITPC at the
-phrase rate. On the other hand there would be no sequence-detector
+generate an inconsistent EEG response and a smaller peak in ITPC at
+the phrase rate. On the other hand there would be no sequence-detector
 network for ungrammatical combinations, such as adjective-verb, and
 these therefore fail to elicit a phrase-level response.
 
@@ -572,8 +628,8 @@ In conclusion, the experiments described in the current study
 demonstrate that neural entrainment cannot be explained at the lexical
 level; rather, it additionally calls for higher-level syntactic
 representations. Yet, in our paradigm, frequency tagging of
-higher-level syntactic units emerged only in the presence of lexical
-category repetition, leaving open the question of how abstract
+higher-level syntactic units emerged most strongly in the presence of
+lexical category repetition, leaving open the question of how abstract
 syntactic representations are.
 
 
@@ -602,81 +658,95 @@ freely available \texttt{Praat} software \citet{Praat}.
 Monosyllabic words were selected from different lexical categories,
 namely adjectives, nouns, verbs, pronouns, adverbs, determiners and
 prepositions. Words were only selected if they could be unambiguously
-categorised into a distinct lexical category, so, for example words
-such as ``drink'', ``ride'' or ``walk'' were avoided because they are
-ambiguous between verbs and nouns. All nouns were singular and all
-verbs were in the present tense.
+categorised into a distinct grammatical category, so, for example
+words such as \texttt{drink}, \texttt{ride} or \texttt{walk} were
+avoided because they are ambiguous between verbs and nouns. All nouns
+were singular and all verbs were in the present tense.
 
 The four experimental conditions were AN, AV, MP and RR:
 \begin{enumerate}
 \item Repetition of `adjective-noun' sequences (AN). 
-\[
-\label{eq:AN}
-\text{``\myuline{cold food} \myuline{loud room} \myuline{tall girl} \myuline{bad cat} \myuline{huge car} \myuline{green tree} \myuline{thin lamp} \myuline{ill man}''}
-\]
+\begin{center}
+\text{\myuline{cold food}\tts\myuline{loud room}\tts\myuline{tall girl}\tts\myuline{bad cat}\tts\myuline{huge car}\tts\myuline{green tree}\tts\myuline{thin lamp}\tts\myuline{ill man}}
+\end{center}
 An adjective and a noun were repeated every other word. This condition
 contained grammatically correct two-word phrase, (underlined, with the
-lexical category repeated every second word.
+grammatical category repeated every second word.
 
 \item Repetition of `adjective-verb' sequences (AV).
-\[
-\label{eq:AV}
-\text{``rough give ill tell thin chew hot hang green fetch small send low ask cold weep''}
-\]
+\begin{center}
+\text{\texttt{rough give ill tell thin chew hot hang green fetch small send low ask cold weep}}
+\end{center}
 An adjective and a verb were repeated every other word. The word
 sequence in this condition preserved the repetition of lexical
 category but did not contain grammatically well-formed phrases.
 
-\item Repetition of grammatically well-formed phrases (underlined) without repetition of lexical category information (MP).
-\[
-\label{eq:MP}
-\text{``\myuline{that word} \myuline{send less} \myuline{not loud} \myuline{huge bird} \myuline{fish cry} \myuline{sheep go} \myuline{the wife}''}
-\]
-Grammatically well-formed, two-word phrases were chosen from a pool of adjectives, nouns, verbs, pronouns, adverbs, determiners and prepositions. Phrases could take one of the following forms: `pronoun-noun', `adverb-adjective', `determiner-noun', `preposition-noun',  `verb-adverb' and these were presented in a pseudo-randomised order to avoid repetition of lexical category in adjacent phrases and to prevent grammatical phrases occurring across phrase boundaries: thus, for example, ``\myuline{not loud} \myuline{fish cry}'' would be excluded since ``loud fish'' is a noun phrase.
+\item Repetition of grammatically well-formed phrases (underlined) without repetition of grammatical category information (MP).
+\begin{center}
+\text{\myuline{that word}\tts\myuline{send less}\tts\myuline{not loud}\tts\myuline{huge bird}\tts\myuline{fish cry}\tts\myuline{sheep go}\tts\myuline{the wife}}
+\end{center}
+Grammatically well-formed, two-word phrases were composed from a pool
+of adjectives, nouns, verbs, pronouns, adverbs, determiners and
+prepositions. Phrases could take one of the following forms:
+`pronoun-noun', `adverb-adjective', `determiner-noun',
+`preposition-noun', `verb-adverb' and these were presented in a
+pseudo-randomised order to avoid repetition of grammatical category in
+adjacent phrases and to prevent grammatical phrases occurring across
+phrase boundaries: thus, for example, \myuline{not loud} \myuline{fish
+  cry} would be excluded since \myuline{loud fish} is a noun phrase.
 
 \item Pseudo-random word sequence chosen so that no phrases can be formed regularly between adjacent words.
-\[
+\begin{center}
 \label{eq:RR}
-\text{``with chew small the his out tall old down tell soft him think at''}
-\]
+\text{\texttt{with chew small the his out tall old down tell soft him think at}}
+\end{center}
 In this condition, words from the pool of adjectives, verbs, prepositions and determiners were randomly selected. Nouns were not included because they combine into grammatically correct phrases with words from many other lexical categories.
 \end{enumerate}
 
 A complete list of all stimuli used in the current study can be found
-in the Supplementary Information. In the AN and AV conditions, words
-were ordered such that there is not difference in similarity between
-the word2vec representation of consecutive words. Taking AN as an
-example, all the cosine similarities between word representions were
-calculated and only those pairs with values between 0.75 and 1 were
-retained, these values were hand-tuned to give a sufficient number of
-pairs while excluded as far as possible dissimilar pairs. To form a
-trial an initial pair was picked for this set, giving the first
-adjective-noun pair in the trial, $A_1$ and $N_1$. The adjective,
-$A_2\not=A_1$, whose similarity to $N_1$ is closest to the similarity
-of $A_1$ and $N_1$ is then picked. Next the noun $N_2$ is picked so
-its similarity to $A_2$ the closest to the similarity of $N_1$ and
-$A_2$. With the constraint that no pair appears twice, this is
-repeated until all 52 words are chosen. The same method was used to
-generate trials for the AV condition.
+in the Supplementary Information. Critically, in the AN and AV
+conditions, words were ordered such that there is not difference in
+similarity between the word2vec representation of consecutive
+words. Taking AN as an example, all the cosine similarities between
+the vectors representing adjective and nouns were calculated and only
+those pairs with values between 0.75 and 1 were retained; these values
+were hand-tuned to give a sufficient number of pairs while excluded as
+far as possible dissimilar pairs. To form a trial an initial pair was
+picked for this set, giving the first adjective-noun pair in the
+trial, $A_1$ and $N_1$. The adjective, $A_2\not=A_1$, whose similarity
+to $N_1$ is closest to the similarity of $A_1$ and $N_1$ is then
+picked. Next the noun $N_2$ is picked so its similarity to $A_2$ the
+closest to the similarity of $N_1$ and $A_2$. With the constraint that
+no pair appears twice, this is repeated until all 52 words are
+chosen. The same method was used to generate trials for the AV
+condition.
+
+%Which "word representations? Was this done for all A and N pairings
+%only (ie A-A pairings and N-N pairings were not taken into account,
+%correct?) It's worth spelling things like this out more explicitly
 
 \subsection*{Experimental Procedures}
 
 Each trial contained a sequence of 52 monosyllabic words played back
 to back in a continuous stream. Trials were therefore 16.64 seconds
 long. In total, participants listened to 150 trials, with 25 trials
-for each of the four conditions here, along with two filler
-conditions. Blocks were made up of six trials and contained one trial
-from each condition plus two filler trials. Within each block, trials
-were presented to the participants one after the other. After each
-trial, participants were asked whether they heard any four word
-phrases, such as (either ``\myuline{ask him this thing}'',
-``\myuline{from my old car}'' or ``\myuline{sit in that tree}''). This
-acted as the attention trap and four-word phrases occurred in ten
-percent of trials. Following the button press, the next trial was
-played after a delay of 250 ms. At the end of each block participants
-were given a 10s break, with a longer 2 minute break at the halfway
-point. Blocks were presented in a random order that was
-counterbalanced across participants.
+for each of the four conditions AN, AV, MP and RR, along with two
+filler conditions. An error in the marker file meant that one block
+was not usable, so 24 streams were included in the analysis. Blocks
+were made up of six stream and contained one stream from each
+condition plus the two filler trials. Within each block, trials were
+presented to the participants one after the other. After each trial,
+participants were asked whether they hadheard any four word phrases,
+the instructions give three examples: \myuline{ask him this thing},
+  \myuline{from my old car} or \myuline{sit in that tree}. This acted
+as the attention trap with the four-word phrases occurred in ten
+percent of trials. These trials were not excluded from the
+analysis. Following the button press, the next trial was played after
+a delay of 250 ms. At the end of each block participants were given a
+10s break, with a longer 2 minute break at the halfway point. Blocks
+were presented in a random order that was counterbalanced across
+participants but the composition of blocks and their order was the
+same across participants.
 
 \subsection*{EEG Recording}
  
@@ -709,11 +779,11 @@ overall length of the analysed part of each trial was 15.36 seconds
 
 After preprocessing, the EEG signal was converted into the frequency
 domain using the discrete Fourier transform with a frequency
-resolution of 0.0651 (1/15.36 Hz). The ITPC, what is sometimes called
-the square mean resultant, is
+resolution of 0.0651 (1/15.36 Hz). The intertrial phase coherence
+(ITPC), what is sometimes called the square mean resultant, is
 \begin{equation}
 \label{eq:itpc}
-R(f;\phi)=\frac{\left|\sum{_k} e^{i\theta_{k\phi}}\right|}{K}
+R(f;\phi)=\frac{\left|\sum_k e^{i\theta_{k\phi}}\right|}{K}
 \end{equation}
 where $\theta^c$ is the phase angle of each complex-valued Fourier
 coefficient at frequency $f$ and $k$ is a trial index, with $\phi$
@@ -723,7 +793,7 @@ In most examples, the ITPC is calculated for each of the four
 different conditions for each participant and each channel; in this
 case $k$ represents the different word streams corresponding to a
 given condition. In this case the ITPC is $R(f;pce)$ where $p$ labels
-participants, $c$ channels and $e$ electrodes. This is averaged across
+participants, $c$ conditions and $e$ electrodes. This is averaged across
 electrodes to give $R(f;pc)$ and, for example, the ITPC for different
 conditions is compared by examining the 20 pairs of values
 corresponding to the twenty partipants. For the `per-item' analysis
@@ -734,22 +804,23 @@ the stream index.
 
 \subsection*{Significance Testing}
 
-Because ITPC values were averaged over channels the phase coherence
-cannot be easily described by a parametric distribution due to the
-correlation between channels. The null distribution of ITPC is
-therefore estimated based on the response at non-target frequencies,
-that is the responses at frequencies that are not harmonically related
-to the syllable rate \cite{DingEtAl2017}. All frequencies between 0.25
-Hz and 4 Hz, other than the target frequencies +/- 2 frequency bins,
-were included to calculate the chance-level normalized phase
-coherence. To assess their significance, ITPC at target frequencies
-for individual participants were compared to the chance-level phase
-coherence. For this, the z-score at each frequency in the ITPC and the
-corresponding p-values were computed. A peak in ITPC was considered
-significant if $p < 0.05$. A one-way ANOVA was applied to the ITPC
-data, followed by pairwise comparisons to compare the ITPC values at
-the syllable and phrase frequency pairwise across conditions.
-
+To determine whether a peak at one of the two target frequencies was
+significantly different from chance the ITPC was compared to the ITPC
+for random data. For the data an ITPC was calculated for each
+electrode using 24 phases computed for the 24 streams in each
+condition for the stimulus; this is then averaged over the 32
+electrodes. To produce a simulated ITPC this calculation was mimicked
+for random phases. Thus, 24 phases were picked at random and used to
+calculate a ITPC for one `electrode', this was repeated 32 times and
+the 32 values were averaged to give a simulated ITPC value which can
+be compared to the ITPC values calculated using the experimental
+data. To produce the confidence intervals for Fig.~\ref{fig:Fig3}
+5,000 of these simulated ITPC values were generated in this way, these
+were ordered and, for example, the 95\% confidence interval
+corresponds to the 250th and 4750th entries in this list. To determine
+whether an ITPC peak was significantly different from chance a
+Mann-Whitney U-test was performed using these 5,000 values and the
+actual participant data.
 
 \subsection*{Simulating Word Vector ITPCs}
 
@@ -767,11 +838,11 @@ the first word in the stream then for $t\in [1,320]$
 \begin{equation}
   v_e(t)=\left\{\begin{array}{ll}\eta\xi(t)&t<\tau\\ w^1_e+\eta\xi(t)\end{array}\right.
 \end{equation}
-where $\tau$ is a delay chosen uniformly in the interval [20,60] and
-$\xi(t)$ is $1/f$ unit variance zero mean noise, $\eta=0.5$. This is
+where $\tau$ is a delay chosen uniformly in the interval [20,60],
+$\xi(t)$ is unit-variance zero-mean pink-noise and $\eta=0.5$. This is
 repeated for each word in the stream, with independent
-$\tau$. Individual participants correspond to different a random
-selection 32 electrodes from the 300 components and to different
+$\tau$. Individual participants correspond to a different random
+selection of 32 `electrodes' from the 300 components and to different
 instances of the $1/f$-noise: this is done to give the graphs some
 similarity to the graphs for the real data, but is not intended to
 model participant-to-participant variability.
@@ -779,23 +850,31 @@ model participant-to-participant variability.
 The AN, AV and MP conditions use the identical stimuli as used in the
 experiment. However, the random condition differs from the RR
 condition in that the words are shuffled. In the RR condition
-adjacent words are chosen so as to not repeat lexical category, this
+adjacent words are chosen so as to not repeat grammatical category, this
 deviation from true randomness affects the ITPC of the
-simulated EEG. With its diffent types of artificial noise, the simulated
+simulated EEG. With its different types of artificial noise, the simulated
 EEG is a complicated measure of the regularity of the stimuli. A much
 simpler measure is given by the Fourier coefficent
 \begin{equation}
-  \phi= \sum_e\left|sum_i (-1)^iw_e^i\right|
+  \phi= \sum_e\left|\sum_i (-1)^iw_e^i\right|
 \end{equation}
 where $w_e^i$ is the $e$ component of the $i$th word in a
 stream. Averaging $\phi$ over streams and normalizing to the random
 condition gives values of 1.87, 2.41, 1.41, 1.13 for AN, AV, MP and RR
 respectively.
 
+%I would rename this section so that the title reflects WHY it was run
+%and depending on how you see its function, it could go after STIMULI
+%section for example.  This section needs to be discussed (eg do we
+%state that this is in response to the Revieewer's point about our
+%Stimuli or about our Results) - at the moment it seems to be totally
+%disconnected and unexpected.
+%I'll edit this section after we have talked about the above.
+
 
 \subsection*{Behavioural experiment}
 
-For the behaviour experiment four trials were chosen for each of the
+For the behavioural experiment four trials were chosen for each of the
 AN, MP and RR conditions along with one filler trial for each of the
 same conditions. For each subject the trials were shuffles and two
 filler trials picked randomly from the four where inserted into the
@@ -843,7 +922,7 @@ manuscript revisions.
 Demonstration of a syntactic tree for an example sentence from \cite{DingEtAl2016, DingEtAl2017}. The sentence is composed of a noun phrase and a verb phrase, each consisting of two words presented at a rate of 1/0.32 Hz.  The sentence is described using a hierarchical tree that splits the sentence first into a noun phrase and a verb phrase and then into words. This is a particularly simple tree, more complex trees may have more branches and not all words will be the same distance from the sentence root. This simple structure is convenient for frequency tagging and the different frequencies corresponding to the three levels of the tree; sentence, phrase and word, have been marked here. Our own experiments employed an even simpler structure with only phrases and words.
 
 \subsection*{Figure 2}
-ITPC of simulated EEG responses based on word2vec distributional semantics model predictions for the four conditions. The model yields peaks in ITPC at the rate of syllable presentation (1/0.32 Hz) in each of the four conditions (AN, AV, MP, RR). A maximal peak in ITPC at the rate at which phrases are presented (1/0.64 Hz) is seen for both the AN condition (A) where two-word sequences are grammatically well-formed and consist of repetitive lexical category information, and the AV (B) condition where two-word sequences are ungrammatical, but still have consistent lexical category information. Peaks in ITPC at the phrase rate are considerably smaller in both the MP (C) and RR (D) conditions, when compared to the peaks in ITPC at the phrase rate in the AN and AV conditions and also with the peaks in ITPC generated at the rate of syllable presentation across all conditions. Vertical gray dotted lines represent the frequency at which syllables and two-word sequences are presented.
+ITPC of simulated EEG responses based on word2vec distributional semantics model predictions for the four conditions. The model yields peaks in ITPC at the rate of syllable presentation (1/0.32 Hz) in each of the four conditions (AN, AV, MP, RR). A maximal peak in ITPC at the rate at which phrases are presented (1/0.64 Hz) is seen for both the AN condition (A) where two-word sequences are grammatically well-formed and consist of repetitive grammatical category information, and the AV (B) condition where two-word sequences are ungrammatical, but still have consistent grammatical category information. Peaks in ITPC at the phrase rate are considerably smaller in both the MP (C) and RR (D) conditions, when compared to the peaks in ITPC at the phrase rate in the AN and AV conditions and also with the peaks in ITPC generated at the rate of syllable presentation across all conditions. Vertical gray dotted lines represent the frequency at which syllables and two-word sequences are presented.
 
 \subsection*{Figure 3}
 
