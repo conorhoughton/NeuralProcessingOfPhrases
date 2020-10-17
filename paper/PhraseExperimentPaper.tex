@@ -142,9 +142,9 @@
 \newline
 % Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
 \\
-Amelia Burroughs\textsuperscript{1*},
+Amelia Burroughs\textsuperscript{1},
 Nina Kazanina\textsuperscript{2,3},
-Conor Houghton\textsuperscript{1}
+Conor Houghton\textsuperscript{1*}
 \\
 \bigskip
 \textsuperscript{1}Department of Computer Science, University of
@@ -156,7 +156,7 @@ Russian Federation \\
 \bigskip
 
 % Use the asterisk to denote corresponding authorship and provide email address in note below.
-* amelia.burroughs@bristol.ac.uk
+* conor.houghton@bristol.ac.uk
 
 \end{flushleft}
 
@@ -164,7 +164,9 @@ Russian Federation \\
 \section*{Acknowledgements}
 CJH and AB acknowledge support through a James S. McDonnell Foundation
 Scholar Award in Cognition (JSMF \#220020239). NK acknowledges the
-support of the HSE RF Government grant 075-15-2019-1930.
+support of the HSE RF Government grant 075-15-2019-1930. We are
+grateful to the anonymous referee for suggesting the behaviour
+experiment and the `per-item' analysis.
 
 % Please keep the abstract below 300 words
 \section*{Abstract}
@@ -175,24 +177,23 @@ debate. Recently, the cortical response to a frequency-tagged
 linguistic stimulus has been shown to track the rate of phrase and
 sentence, as well as syllable, presentation. This could be interpreted
 as evidence for the hierarchical processing of speech, or as a
-response to the repetition of grammatical category. To examine the extent
-to which hierarchical structure plays a role in language processing we
-record EEG from human participants as they listen to isochronous
-streams of monosyllabic words. Comparing responses to sequences in
-which grammatical category is strictly alternating and chosen such that
-two-word phrases can be grammatically constructed --- ``cold food loud
-room'' --- or is absent --- ``rough give ill tell'' --- showed
-cortical entrainment at the two-word phrase rate was only present in
-the grammatical condition. Thus, grammatical category repetition alone
-does not yield entertainment at higher level than a word. NEED TO
-REPHRASE THIS: On the other hand, no cortical entrainment was found
-for the mixed-phrase condition that contained two-word phrases but no
-grammatical category repetition --- ``that word send less'' --- as one
-would expect if the measured entrainment reflected purely abstract
-hierarchical syntactic units. Our results support a model in which
-word-level grammatical category information is required to build larger
-units.
-
+response to the repetition of grammatical category. To examine the
+extent to which hierarchical structure plays a role in language
+processing we record EEG from human participants as they listen to
+isochronous streams of monosyllabic words. Comparing responses to
+sequences in which grammatical category is strictly alternating and
+chosen such that two-word phrases can be grammatically constructed ---
+\texttt{cold food loud room} --- or is absent --- \texttt{rough give
+  ill tell} --- showed cortical entrainment at the two-word phrase
+rate was only present in the grammatical condition. Thus, grammatical
+category repetition alone does not yield entertainment at higher level
+than a word. On the other hand, cortical entrainment was reduced for
+the mixed-phrase condition that contained two-word phrases but no
+grammatical category repetition --- \texttt{that word send less} ---
+which is not what would be expected if the measured entrainment
+reflected purely abstract hierarchical syntactic units. Our results
+support a model in which word-level grammatical category information
+is required to build larger units.
 
 \section*{Introduction}
 
@@ -208,8 +209,7 @@ claim that hierarchical representations are non-essential
 
 According to the hierarchical account of language, comprehension is
 underpinned by the brain's ability to abstract over a number of
-linguistic levels, such as lexical categories such as verb, noun,
-adjective, and phrases (verb phrases, noun phrases and so on) and
+linguistic levels, such as lexical categories and phrases and to
 combine them hierarchically according to a set of grammatical
 principles. In this view language users parse an incoming sequence of
 words into a nested tree-like structure that details taxonomy-like
@@ -225,12 +225,12 @@ comprehension (Fig.~\ref{fig:freq_tree}).
 \Tree
     [.Sentence     
       [.Noun\;Phrase
-        [.Adjective {\textsl{new}} ]
-        [.Noun  {\textsl{plans}} ]
+        [.Adjective {\texttt{new}} ]
+        [.Noun  {\texttt{plans}} ]
       ]
       [.Verb\;Phrase 
-        [.Verb {\textsl{gave}} ]
-        [.Noun {\textsl{hope}} ]
+        [.Verb {\texttt{gave}} ]
+        [.Noun {\texttt{hope}} ]
       ]
     ]
  \node at (4,0.1) {1/1.28 Hz};
@@ -251,7 +251,23 @@ comprehension (Fig.~\ref{fig:freq_tree}).
 \label{fig:freq_tree}
 \end{figure}
 
-WE NEVER DESCRIBE DING RESULTS
+In support of this view, it has been demonstrated, using MEG in
+\cite{DingEtAl2016} and using EEG in \cite{DingEtAl2017} that cortical
+activity can entrain to the rate of syllable, phrase and sentence
+presentation. In the EEG experiments participants were played
+continuous streams of four-word sentences, where each word was 320 ms
+long in duration and consisted of only a single syllable. As in
+Fig.~\ref{fig:freq_tree} each sentence was composed of a noun phrase
+and a verb phrase, which both contained two words. Thus these stimuli
+have a specific frequency at three levels of linguistic structure:
+syllables at 3.125 Hz, phrases at 1.5625 Hz and sentences at 0.78125
+Hz. The neural responses were analysed using time-frequency
+decomposition and measures of inter-trial phase coherence
+(ITPC). Cortical activity was found to be phase-locked to the rate of
+presentation of syllables, phrases and sentences even though only the
+syllable frequency is present in the auditory signal itself, the other
+two frequencies rely on the meaning of the words and the structure of
+the sentences.
 
 However, it has also been suggested that the brain could rely on
 simpler, potentially more generic, strategies underpinned by
@@ -366,7 +382,7 @@ meaning.
 \include{./Figure_Simulated/simulated}
 \caption{ITPC of the simulated EEG calculated from the word2vec
   representation for the four conditions. The model yields peaks in
-  ITPC at the rate of syllable presentation (1/0.32 Hz) in each of the
+  ITPC at the rate of syllable presentation (3.125 Hz) in each of the
   four conditions (AN, AV, MP, random). Vertical red lines represent
   the frequency at which syllables and two-word sequences are
   presented, the blue lines show responses for 20 simulated
@@ -377,7 +393,7 @@ meaning.
 
 The simulated EEG calculated from the word2vec representation yields a
 peak in ITPC of the simulated EEG responses at the rate of syllable
-presentation (1/0.32 Hz, Fig.~\ref{fig:Fig1} in each of the four
+presentation (3.125 Hz, Fig.~\ref{fig:Fig1} in each of the four
 conditions. The model also yields a peak in ITPC at the rate of phrase
 presentation (1/0.64 Hz) for the AN and AV conditions
 (~\ref{fig:Fig1}), where, respectively, the grammatical adjective-noun
@@ -394,7 +410,7 @@ words are shuffled at random.
 
 In line with the prediction from the simulated data, EEG responses
 from human participants showed a highly significant peak ($p<10^{-6}$)
-in ITPC at the rate of syllable presentation (1/0.32 Hz) in all
+in ITPC at the rate of syllable presentation (3.125 Hz) in all
 conditions tested (Fig.~\ref{fig:Fig2}). There was a highly prominent
 peak at the phrase rate (1.5625Hz) in the AN condition ($p<10^{-6}$),
 and a much less prominent yet still significant peak in the MP
@@ -435,7 +451,7 @@ peaks.
 \caption{EEG responses recorded in human participants during
   presentation of trials from each of the four
   conditions. Statistically significant peaks in ITPC values are
-  observed at the rate of syllable presentation (1/0.32 Hz) in each of
+  observed at the rate of syllable presentation (3.125 Hz) in each of
   the four conditions (AN, AV, MP, RR). A statistically significant
   peak in ITPC is observed at the rate of phrase presentation (1/0.64
   Hz) in the AN condition, where phrases are grammatically well-formed
@@ -765,7 +781,7 @@ independent component was removed if in its topography the mean power
 over the most frontal four channels (Fp1, Fp2, F7 and F8) was two
 times greater than the mean power over all other channels, as in
 \citet{DingEtAl2017}. As our signals of interest are in the
-low-frequency region, at 1/0.64 Hz (phrases), and 1/0.32 Hz
+low-frequency region, at 1.5625 Hz (phrases), and 3.125 Hz
 (syllables), the EEG signals were filtered offline using a 25 Hz
 low-pass filter (sixth-order Butterworth IIR). Data were re-referenced
 offline to a common average reference. For each condition, individual
@@ -898,10 +914,21 @@ often these words were not from the same most recent trial or even not
 represented in the experiment at all. There was also no significant
 difference between three conditions in the number of subjects who
 mistakenly answered that the previous trial contained a four-word
-phrase. All data and the scripts used to run the experiment are
-available online
-(\texttt{/github.com/conorhoughton/listening\textunderscore
-  experiment\textunderscore 2020}).
+phrase.
+
+\section*{Code and data availability}
+The data collected in this study is available at \textt{zenodo}; the
+\texttt{Presentation 20.0} (Neurobehavioural Systems Inc.) script used
+to run the experiment, the stimuli and the code used for data analysis
+and for producing the simulated EEG is available at
+\texttt{github.com/conorhoughton/NeuralProcessingOfPhrases}.  In
+addition to the \texttt{Matlab} code used to epoch the EEG data,
+perform blink-removal and calculate the Fourier transform, analysis
+and simulations were performed using \texttt{Julia 1.1.1}. All data
+from the behaviour experiment and the scripts, in \texttt{Presentation 20.0}
+ used to run the experiment are
+available online at \texttt{github.com/conorhoughton/listening\textunderscore{}experiment\textunderscore{}2020}.
+
 
 \section*{Competing Interests}
 The authors declare that no competing interests exist.
@@ -914,23 +941,6 @@ AB carried out the experiments, AB and CJH performed the analysis and
 prepared the figures. AB wrote the initial draft of the main
 manuscript text, CJH and NK made a significant contribution during
 manuscript revisions.
-
-\section*{Figure Legends}
-
-\subsection*{Figure 1}
-
-Demonstration of a syntactic tree for an example sentence from \cite{DingEtAl2016, DingEtAl2017}. The sentence is composed of a noun phrase and a verb phrase, each consisting of two words presented at a rate of 1/0.32 Hz.  The sentence is described using a hierarchical tree that splits the sentence first into a noun phrase and a verb phrase and then into words. This is a particularly simple tree, more complex trees may have more branches and not all words will be the same distance from the sentence root. This simple structure is convenient for frequency tagging and the different frequencies corresponding to the three levels of the tree; sentence, phrase and word, have been marked here. Our own experiments employed an even simpler structure with only phrases and words.
-
-\subsection*{Figure 2}
-ITPC of simulated EEG responses based on word2vec distributional semantics model predictions for the four conditions. The model yields peaks in ITPC at the rate of syllable presentation (1/0.32 Hz) in each of the four conditions (AN, AV, MP, RR). A maximal peak in ITPC at the rate at which phrases are presented (1/0.64 Hz) is seen for both the AN condition (A) where two-word sequences are grammatically well-formed and consist of repetitive grammatical category information, and the AV (B) condition where two-word sequences are ungrammatical, but still have consistent grammatical category information. Peaks in ITPC at the phrase rate are considerably smaller in both the MP (C) and RR (D) conditions, when compared to the peaks in ITPC at the phrase rate in the AN and AV conditions and also with the peaks in ITPC generated at the rate of syllable presentation across all conditions. Vertical gray dotted lines represent the frequency at which syllables and two-word sequences are presented.
-
-\subsection*{Figure 3}
-
-EEG responses recorded in human participants during presentation of trials from each of the four conditions. Statistically significant peaks in ITPC values are observed at the rate of syllable presentation (1/0.32 Hz) in each of the four conditions (AN, AV, MP, RR). A statistically significant peak in ITPC is only observed at the rate of phrase presentation (1/0.64 Hz) in the AN condition (A), where phrases are grammatically well-formed and composed of the same  lexical categories. This was not significant in any of the other three conditions (B-D). Stars represent statistical significance *= $p<0.005$. Vertical gray dotted lines represent the frequency at which syllables and two-word sequences are presented.
-
-\subsection*{Figure 4}
-
-Significance in ITPC at the phrase and syllable rates at the individual subject level. z-scores for the ITPC at the two frequencies of interest: the syllable rate (dark gray bars, 1/0.32 Hz) and phrase rate (light gray bars, 1/0.64 Hz) in each of the four conditions (AN, AV, MP, RR). The graphs for each participant are positioned next door to one another. For each condition, z-score values of the ITPC at each frequency of interest are displayed for each of the 20 subjects. This facilitates comparison of individual subjects across both frequencies of interest and across conditions. Participants one to 20 are ordered from left to right by the significance of their ITPC at the phrase rate during the AN condition (A, light gray bars). Red dashed horizontal lines indicate the significance threshold ($p<0.005$, $z>1.96$) and so any z-score that is above this line represents a  ITPC that is significantly higher than chance level.
 
 \end{document}
 
