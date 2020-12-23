@@ -1,0 +1,46 @@
+
+New paper with Amelia Burroughs and Nina Kazanina on the brain's response to grammar:
+https://www.biorxiv.org/content/10.1101/2020.12.22.423994v1
+
+A few years ago I heard a talk by Nina where she mentioned work by
+David Poeppel, Nai Ding and co-workers which amazed me, amazed me enough to
+start work on neurolinguistics.
+
+They measured using MEG, later EEG, a neural response to hierarchical
+grammatical structure: verbs bound to their subjects, nouns to their
+adjectives, noun phrases and verb phrases bound together to make
+sentences.
+
+This seemed like it must be wrong: the idea that the very formal
+grammatical manipulations proposed in Chomskyan linguistics can be
+traced in neural activity . . .
+
+. . . contradicted my understanding of the brain as a organ for
+Bayesian inference. It was me that was wrong.
+
+I was convinced that the response they saw was a result of the
+regularity of their stimulus, they were seeing the brain going 'oh
+there's a noun' not 'that noun is bound to that verb'.
+
+To examine the we compared the EEG response to stimuli composed of
+grammatical adjective-noun pairs and ungrammatical adjective-verb
+pairs.
+
+If the response was an artifact of repetition in the stimulus and
+word-by-word lexical categorization in the brain, these should produce
+the same response.
+
+In fact there is a stronger response from adjective-noun, consistent
+with the original result and Chomskyan linguistics.
+
+Interesting we also found a smaller response from a stimulus composed
+of a mixture of different types of grammatical two word phrases.
+
+This might indicate the response to phrases depends on the type of
+phrase.
+
+Of course, I still believe the brain is an organ of Bayesian
+inference, but it must be one which exploits hierarchical grammatical
+structure.
+
+How is this related to how LSTMs work? That I'd like to know.
