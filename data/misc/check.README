@@ -1,0 +1,6 @@
+
+these short programmes check the marker files have exactly one of all
+the stimuli.
+
+They will list any stimuli that don't satisfy this so getting just the
+file names shows they have passed the test.
