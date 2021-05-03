@@ -5,23 +5,19 @@ using Turing
 using StatisticalRethinking
 using Distributions
 using Base.Math
+include("wrapped_cauchy.jl")
 
 Turing.setprogress!(false)
 
-data=rand(Normal(0,1),1000)
+data=rand(Cauchy(0,1),1000)
 data=rem2pi.(data,RoundNearest)
-
-
 
 @model thisModel(data) = begin
     #priors
     mu ~ Uniform(-pi, pi)
     s ~ Uniform(0, 10)
     #model
-    for i in eachindex(data)
-        original ~ Normal(mu,s)
-        data[i] = rem2pi(original,RoundNearest)
-    end
+    data .~WrappedCauchy.(mu,s)
 end
 
 # Draw the samples
