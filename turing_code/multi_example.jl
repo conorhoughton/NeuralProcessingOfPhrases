@@ -13,19 +13,33 @@ Distributions.pdf(d::WrappedCauchy, theta::Real) = 1/2pi * sinh(d.gamma) / (cosh
 Distributions.logpdf(d::WrappedCauchy, theta::Real) = log(sinh(d.gamma)) - log(cosh(d.gamma) - cos(theta-d.mu))-log(2pi)
 Distributions.rand(rng::AbstractRNG, d::WrappedCauchy) = angle(exp(rand(Cauchy(d.mu,d.gamma))*im))
 
-mu=1.0::Float64
+mu1=1.0::Float64
+mu2=2.0::Float64
 gamma=0.5::Float64
 
 nS=100
-angleData=rand(WrappedCauchy(mu,gamma),nS)
 
-@model fitWrapped(data) = begin
+angleData1=rand(WrappedCauchy(mu1,gamma),nS)
+angleData2=rand(WrappedCauchy(mu2,gamma),nS)
+
+angleData=vcat(angleData1,angleData2)
+
+group1=ones(Int64,nS)
+group2=2*ones(Int64,nS)
+
+group=vcat(group1,group2)
+
+@model function fitWrapped(group,data) 
 
     gamma ~ Exponential(0.5)
-    mu ~ Uniform(-pi,pi)
+    mu=zeros(Real,2)
 
+    for i in 1:length(mu)
+        mu[i] ~ Uniform(-pi,pi)
+    end
+    
     for i in 1:length(data)
-        data[i] ~ WrappedCauchy(mu,gamma)
+        data[i] ~ WrappedCauchy(mu[group[i]],gamma)
     end
     
 end
@@ -34,6 +48,6 @@ epsilon = 0.01
 tau = 10
 iterations = 1000
 
-chain = sample(fitWrapped(angleData), NUTS(0.85), iterations, progress=true)
+chain = sample(fitWrapped(group,angleData), NUTS(0.85), iterations, progress=true)
 
     
