@@ -1,4 +1,4 @@
-# second toy example
+# second toy example - now using filldist
 
 using Turing, Distributions
 using Random
@@ -17,7 +17,7 @@ mu1=1.0::Float64
 mu2=2.0::Float64
 gamma=0.5::Float64
 
-nS=100
+nS=25
 
 angleData1=rand(WrappedCauchy(mu1,gamma),nS)
 angleData2=rand(WrappedCauchy(mu2,gamma),nS)
@@ -29,15 +29,11 @@ group2=2*ones(Int64,nS)
 
 group=vcat(group1,group2)
 
-@model function fitWrapped(group,data) 
+@model function fitWrapped(group,groupN,data) 
 
     gamma ~ Exponential(0.5)
-    mu=zeros(Real,2)
+    mu ~ filldist(Uniform(-pi,pi),groupN)
 
-    for i in 1:length(mu)
-        mu[i] ~ Uniform(-pi,pi)
-    end
-    
     for i in 1:length(data)
         data[i] ~ WrappedCauchy(mu[group[i]],gamma)
     end
@@ -48,6 +44,6 @@ epsilon = 0.01
 tau = 10
 iterations = 1000
 
-chain = sample(fitWrapped(group,angleData), NUTS(0.85), iterations, progress=true)
+chain = sample(fitWrapped(group,2,angleData), NUTS(0.85), iterations, progress=true)
 
     

@@ -1,6 +1,6 @@
-# second toy example
+# second toy example, more than one group, trying with DynamicHMC
 
-using Turing, Distributions
+using DynamicHMC,Turing, Distributions
 using Random
 Random.seed!(0)
 
@@ -44,10 +44,8 @@ group=vcat(group1,group2)
     
 end
 
-epsilon = 0.01
-tau = 10
 iterations = 1000
 
-chain = sample(fitWrapped(group,angleData), NUTS(0.85), iterations, progress=true)
+chain = sample(fitWrapped(group,angleData), DynamicNUTS(), iterations, progress=true)
 
     
