@@ -7,7 +7,7 @@ using Random
 
 include("general.jl")
 include("wrapped_cauchy.jl")
-
+include("bundt.jl")
 
 
 #make a small experiment
@@ -18,24 +18,28 @@ freqN=58
 experiment=load([participant])
 experiment=experiment[(experiment.participant.==participant) .& (experiment.electrode.==electrode) .& (experiment.freqC.<=freqN),:]
 
+gammaWidth=15.0
 
-@model function fitWrapped(angles,freqs,nF)
+@model function fitWrapped(angles,freqs,nF,::Type{T} = Float64) where {T}
     
-    mu=zeros(Real,nF)
-    gamma=zeros(Real,nF)
 
+    gamma~filldist(Exponential(gammaWidth),nF)
+
+    
+    x=Vector{Vector{T}}(undef, nF)
     for i in 1:nF
-        gamma[i] ~ Exponential(15.0)
-        mu[i]    ~ Uniform(-pi,pi)
+        x[i]    ~ Bundt()
     end
 
     for i in 1:length(angles)
-        angles[i]~ WrappedCauchy(mu[freqs[i]],gamma[freqs[i]])
+        mu=atan(x[freqs[i]][1],x[freqs[i]][2])
+        angles[i]~ WrappedCauchy(mu,gamma[freqs[i]])
     end
 
 end
 
 nF=freqN
+
 angles=experiment.angle
 freqs =experiment.freqC
 

@@ -13,9 +13,12 @@ function getStimuliP1to4()
 end
 
 function condition(trial)
-    getStimuli()[trunc(Int,trial/30)+1]
+    getStimuli()[conditionC(trial)]
 end
-    
+
+function conditionC(trial)
+    trunc(Int,trial/30)+1
+end
 function getGrammarPeaks()
     f=1/0.32
     [0.25*f,0.5*f,0.75*f,f]
@@ -57,7 +60,7 @@ end
 
 function load(participants)
 
-    experiment=DataFrame(participant=Int64[],name=String[],condition=String[],trial=Int64[],electrode=Int64[],freqC=Int32[],freq=Float64[],ft=Complex{Float64}[],phase=Complex{Float64}[],angle=Float64[])
+    experiment=DataFrame(participant=Int64[],name=String[],condition=String[],conditionC=Int64[],trial=Int64[],electrode=Int64[],freqC=Int32[],freq=Float64[],ft=Complex{Float64}[],phase=Complex{Float64}[],angle=Float64[])
 
     pathName = "../data/ft/"
     freqFile = pathName*"freq.txt"
@@ -94,7 +97,7 @@ function load(participants)
                     for freqC in 1:sizeBigA[3]
                         thisFt=bigA[trialC,electrodeC,freqC]
                         trialN=trial.Column1[trialC]
-                        push!(experiment,[participantI,nameRoot,condition(trialN),trialN,electrodeC,freqC,frequencies[freqC],thisFt,thisFt/abs(thisFt),angle(thisFt)])
+                        push!(experiment,[participantI,nameRoot,condition(trialN),conditionC(trialN),trialN,electrodeC,freqC,frequencies[freqC],thisFt,thisFt/abs(thisFt),angle(thisFt)])
                     end
                 end
             end
