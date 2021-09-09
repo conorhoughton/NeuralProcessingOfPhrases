@@ -11,20 +11,17 @@ include("general.jl")
 include("wrapped_cauchy.jl")
 include("bundt.jl")
 
-
-#make a small experiment
-
-electrode=rand(1:36)
 freqC=21
 
 experiment=load(collect(5:20))
-experiment=experiment[(experiment.electrode.==electrode) .& (experiment.freqC.==freqC),:]
+experiment=experiment[(experiment.freqC.==freqC),:]
 
-@model function fitWrapped(angles,conditions,participants,conditionN,participantN,::Type{T}=Float64) where {T}
+@model function fitWrapped(angles,conditions,participants,electrodes,conditionN,participantN,electrodeN,::Type{T}=Float64) where {T}
 
     itpcC ~ filldist(Beta(0.5,2),conditionN)
 
-    probCP ~ filldist(Beta(0.5,0.5),participantN)
+    probP ~ filldist(Beta(0.5,0.5),participantN)
+    probE ~ filldist(Beta(0.5,0.5),electrodeN)
 
     x = Vector{Vector{T}}(undef,participantN)
     
@@ -35,8 +32,9 @@ experiment=experiment[(experiment.electrode.==electrode) .& (experiment.freqC.==
     for i in 1:length(angles)
         thisCond=conditions[i]
         thisPart=participants[i]
+	thisElec=electrodes[i]
         mu=atan(x[thisPart][1],x[thisPart][2])
-      	gamma=-log(probCP[thisPart]*itpcC[thisCond])
+      	gamma=-log(probP[thisPart]*probE[thisElec]*itpcC[thisCond])
         angles[i] ~ WrappedCauchy(mu,gamma)
     end
 
@@ -46,11 +44,12 @@ angles=experiment.angle
 
 participants = [x-4 for x in experiment.participant]
 conditions   = experiment.conditionC
+electrodes   = experiment.electrode
 
 
 iterations = 1000
 acceptance = 0.99
 
-chain = sample(fitWrapped(angles,conditions,participants,6,16) , NUTS(acceptance), MCMCThreads(),iterations,4)
+chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,16,32) , NUTS(acceptance), MCMCThreads(),iterations,4)
 
-serialize("fit_one_mult_chain_"*string(electrode)*".jls", chain)    
+serialize("fit_all_chain_long.jls", chain)    

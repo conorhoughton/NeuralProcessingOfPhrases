@@ -17,13 +17,13 @@ function Distributions.rand(rng::AbstractRNG, d::Bundt)
     [r*cos(theta),r*sin(theta)]
 end
 
-function Distributions.rand!(rng::AbstractRNG,d::Bundt,x::AbstractArray{T}) where T<:Real 
+function Distributions.rand!(rng::AbstractRNG,d::Bundt,x::AbstractArray) 
     r=rand(Gamma())
     theta=rand(Uniform(-pi,pi))
     x=[r*cos(theta),r*sin(theta)]
 end
 
-function Distributions._rand!(rng::AbstractRNG,d::Bundt,x::AbstractArray{T}) where T<:Real 
+function Distributions._rand!(rng::AbstractRNG,d::Bundt,x::AbstractArray) 
     r=rand(Gamma())
     theta=rand(Uniform(-pi,pi))
     x=[r*cos(theta),r*sin(theta)]

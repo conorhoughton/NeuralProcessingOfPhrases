@@ -11,9 +11,11 @@ include("general.jl")
 include("wrapped_cauchy.jl")
 include("bundt.jl")
 
+
 #make a small experiment
-electrode=5
-freqC=45
+
+electrode=rand(1:36)
+freqC=21
 
 experiment=load(collect(5:20))
 experiment=experiment[(experiment.electrode.==electrode) .& (experiment.freqC.==freqC),:]
@@ -56,6 +58,6 @@ conditions   = experiment.conditionC
 iterations = 1000
 acceptance = 0.99
 
-chain = sample(fitWrapped(angles,conditions,participants,6,16) , NUTS(acceptance), iterations)
+chain = sample(fitWrapped(angles,conditions,participants,6,16) , NUTS(acceptance), MCMCThreads(),iterations,4)
 
-serialize("fit_one_electrode_chain.jls", chain)    
+serialize("fit_one_electrode_chain_"*string(electrode)*".jls", chain)    
