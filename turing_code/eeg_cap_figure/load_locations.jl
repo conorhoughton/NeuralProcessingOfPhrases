@@ -9,7 +9,6 @@ function loadLocs()
 
     for line in lines
     	entries=split(line)
-        println(entries)
     	push!(electrodeLocs,[parse(Float64,entries[2]),parse(Float64,entries[3]),entries[6]])
     end
 
