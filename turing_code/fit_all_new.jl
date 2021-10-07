@@ -15,6 +15,8 @@ freqC=21
 
 numberP=16
 
+runC=52
+
 electrodeN=32
 
 experiment=load(collect(5:4+numberP),freqC)
@@ -84,4 +86,4 @@ acceptance = 0.75
 
 chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,numberP,electrodeN) , NUTS(acceptance) , MCMCThreads(),iterations,8)
 
-serialize("fit_all_51_p"*string(numberP)*".jls", chain)    
+serialize("fit_all_"*string(runC)*"_e"*string(electrodeN)*"_p"*string(numberP)*".jls", chain)    
