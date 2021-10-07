@@ -4,6 +4,7 @@ using DynamicHMC, Turing
 using Serialization
 using Random
 using MCMCChains
+using StatsFuns: logistic
 
 #Random.seed!(0)
 
@@ -13,28 +14,30 @@ include("bundt.jl")
 
 freqC=21
 
-experiment=load(collect(5:16))
+experiment=load(collect(5:12))
 experiment=experiment[(experiment.freqC.==freqC),:]
 
 @model function fitWrapped(angles,conditions,participants,electrodes,conditionN,participantN,electrodeN,::Type{T}=Float64) where {T}
 
-    itpcC ~ filldist(Beta(0.5,2),conditionN)
+    itpcC ~ filldist(Normal(2),conditionN)
 
-    probP ~ filldist(Beta(0.5,0.5),participantN)
-    probE ~ filldist(Beta(0.5,0.5),electrodeN)
+    probP ~ filldist(Normal(),participantN)
+    probE ~ filldist(Normal(),electrodeN)
 
-    x = Vector{Vector{T}}(undef,participantN)
+    x = Array{Vector{T}}(undef,(participantN,electrodeN))
     
     for i in 1:participantN
-        x[i] ~ Bundt()
+    	for j in 1:electrodeN
+            x[i,j] ~ Bundt()
+	end
     end
 
     for i in 1:length(angles)
         thisCond=conditions[i]
         thisPart=participants[i]
 	thisElec=electrodes[i]
-        mu=atan(x[thisPart][1],x[thisPart][2])
-      	gamma=-log(probP[thisPart]*probE[thisElec]*itpcC[thisCond])
+        mu=atan(x[thisPart,thisElec][1],x[thisPart,thisElec][2])
+      	gamma=-log(logistic(probP[thisPart]+probE[thisElec]+itpcC[thisCond]))
         angles[i] ~ WrappedCauchy(mu,gamma)
     end
 
@@ -50,6 +53,6 @@ electrodes   = experiment.electrode
 iterations = 1000
 acceptance = 0.99
 
-chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,12,32) , NUTS(acceptance), MCMCThreads(),iterations,4)
+chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,8,32) , NUTS(acceptance), MCMCThreads(),iterations,4)
 
-serialize("fit_all_chain_p12.jls", chain)    
+serialize("fit_all_exp_p8.jls", chain)    

@@ -107,3 +107,51 @@ function load(participants)
     experiment
     
 end
+
+function load(participants,freqC::Int64)
+
+    experiment=DataFrame(participant=Int64[],name=String[],condition=String[],conditionC=Int64[],trial=Int64[],electrode=Int64[],freqC=Int32[],freq=Float64[],ft=Complex{Float64}[],phase=Complex{Float64}[],angle=Float64[])
+
+    pathName = "../data/ft/"
+    freqFile = pathName*"freq.txt"
+
+    frequencies=Float64[]
+
+    open(freqFile) do file
+        for ln in eachline(file)
+            if ln!=""
+                push!(frequencies,parse(Float64,ln))
+            end
+        end
+    end
+
+    filenameFile="file_list_full.txt"
+    lines=readlines(pathName*filenameFile)
+
+    for (participantI,line) in enumerate(lines)
+        if participantI in participants
+            nameRoot=strip(line)
+            inputFile=pathName*nameRoot*"_ft.dat"
+            trialFile=pathName*nameRoot*"_trial.dat"
+            
+            println("loading "*nameRoot)
+            
+            bigA=load(inputFile)
+            
+            trial=DataFrame(CSV.File(trialFile,header=false))
+            
+            sizeBigA=size(bigA)
+            
+            for trialC in 1:sizeBigA[1]
+                for electrodeC in 1:sizeBigA[2]
+                    thisFt=bigA[trialC,electrodeC,freqC]
+                    trialN=trial.Column1[trialC]
+                    push!(experiment,[participantI,nameRoot,condition(trialN),conditionC(trialN),trialN,electrodeC,freqC,frequencies[freqC],thisFt,thisFt/abs(thisFt),angle(thisFt)])
+                end
+            end
+        end
+    end
+
+    experiment
+    
+end
