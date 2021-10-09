@@ -10,10 +10,25 @@ bigFrame=DataFrame(deserialize("example_chain.jls"))
 
 bigFrame=bigFrame[!,r"itpcC"]
 
-rename!(bigFrame,[:advp,:rrrr,:rrrv,:avav,:anan,:phmi])
+conditions=["advp","rrrr","rrrv","avav","anan","phmi"]
 
-println(hpdi((bigFrame[!,:anan]-bigFrame[!,:rrrr])))
+rename!(bigFrame,conditions)
 
-println(hpdi((bigFrame[!,:anan]-bigFrame[!,:advp])))
+compareConds=["anan","advp","avav","phmi","rrrv","rrrr"]
 
-println(hpdi((bigFrame[!,:advp]-bigFrame[!,:rrrr])))
+compareFrame=DataFrame(name=String[],min=Float64[],mean=Float64[],max=Float64[])
+
+for i in 1:6
+    for j in i+1:6
+        a=compareConds[i]
+        b=compareConds[j]
+        thisName=a*"-"*b
+        (thisMin,thisMax)=hpdi((bigFrame[!,a]-bigFrame[!,b]);alpha=0.05)
+        thisMean=mean(bigFrame[!,a]-bigFrame[!,b])
+        push!(compareFrame,[thisName,thisMin,thisMean,thisMax])
+    end
+end
+        
+plt=Gadfly.plot(compareFrame, x=:name, y=:mean, ymin=:min, ymax=:max, Geom.point, Geom.errorbar,Theme(background_color="white"));
+
+draw(PNG("test.png", 20cm, 20cm), plt)
