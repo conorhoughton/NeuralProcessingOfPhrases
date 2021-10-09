@@ -2,22 +2,21 @@ using MCMCChains
 using Serialization
 using DataFrames
 using CSV
-
-
 using Gadfly
 using Cairo, Fontconfig
 
 include("load_locations.jl")
 
-electrodeValues=DataFrame()
 
-locationsDF=loadLocs()
+make=false
 
-let
-    global electrodeValues
-    global locationsDF
+
+function loadDF(chainName)
+        
+    electrodeValues=DataFrame()
+    locationsDF=loadLocs()
     
-    chn=deserialize("example_chain.jls")
+    chn=deserialize(chainName)
     df=DataFrame(chn)[:,r"itpcE"]
     electrodeValues.keys=names(df)
     electrodeValues.means=mean.(eachcol(df))
@@ -33,13 +32,21 @@ let
     
     electrodeValues=innerjoin(electrodeValues,locationsDF,on=:names)
 
-    println(electrodeValues)
+    electrodeValues
 
-    
 end
 
+if make==true
+    electrodeValues=loadDF("example_chain.jls")
+    serialize("example_electrodes.df",electrodeValues)
+else
+    electrodeValues=deserialize("example_electrodes.df")
+    locationsDF=loadLocs()
+    
+    draw_size=20
+    dot_size=draw_size/3 #also divided by 10
+    
+    thisPlot=plot(layer(electrodeValues,x=:x,y=:y,color=:means,size=[dot_size*mm]),layer(locationsDF,x=:x,y=:y,size=[1mm],color=[colorant"black"]),layer(x=[0.0],y=[0.0],size=[(draw_size*0.35)*cm]),layer(x=[0.0],y=[1.7],shape=[Shape.utriangle],size=[(draw_size*0.075)*cm]),Theme(background_color="white"))
 
-
-thisPlot=plot(layer(electrodeValues,x=:x,y=:y,color=:means,size=[5mm]),layer(locationsDF,x=:x,y=:y,size=[1mm]),Theme(background_color="white"))
-
-draw(PNG("test.png", 8inch, 8inch), thisPlot)
+    draw(PNG("test.png", draw_size*cm, draw_size*cm), thisPlot)
+end
