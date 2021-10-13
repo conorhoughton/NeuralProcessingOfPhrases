@@ -4,6 +4,7 @@ using DynamicHMC, Turing
 using Serialization
 using Random
 using MCMCChains
+using LinearAlgebra
 
 #Random.seed!(0)
 
@@ -11,13 +12,13 @@ include("general.jl")
 include("wrapped_cauchy.jl")
 include("bundt.jl")
 
-runC=34
+runC=9
 
 freqC=21
 
 numberP=8
 
-electrodeN=32
+electrodeN=8
 
 
 experiment=load(collect(5:4+numberP),freqC)
@@ -25,17 +26,13 @@ experiment=experiment[(experiment.freqC.==freqC) .& (experiment.electrode.<=elec
 
 @model function fitWrapped(angles,conditions,participants,electrodes,conditionN,participantN,electrodeN,::Type{T}=Float64) where {T}
 
- #   itpcC ~ filldist(Beta(0.75,0.75),conditionN
-
     itpcC ~    filldist(Normal(),conditionN)
-    itpcE ~    filldist(Normal(),electrodeN) 
-    itpcP ~    filldist(Normal(),participantN) 
+#    itpcC ~    filldist(Exponential(1.0),conditionN)	
+#     itpcC ~ filldist(Beta(2.0,2.0),conditionN)
+
+    overall ~ Exponential(1.0)
 
     bias ~ Normal()
-
-    scale ~ Exponential(1.0)
-
-
 
     x = Array{Vector{T}}(undef,(participantN,electrodeN))
 
@@ -55,11 +52,15 @@ experiment=experiment[(experiment.freqC.==freqC) .& (experiment.electrode.<=elec
 	thisElec=electrodes[i]
 
         mu=atan(x[thisPart,thisElec][1],x[thisPart,thisElec][2])
+	scale=norm(x[thisPart,thisElec])
 
       	#r ~ Beta(itpcC[thisCond],1.0)	
 
-#	gamma = -log(logistic(scale*itpcC[thisCond])*logistic(scale*itpcE[thisElec])*logistic(scale*itpcP[thisPart]))-log(logistic(bias))
-	gamma = -log(logistic(scale*(itpcC[thisCond]+itpcE[thisElec]+itpcP[thisPart])+bias))
+
+#	gamma = -log(logistic(scale*itpcC[thisCond]))
+#	gamma = overall*scale*logistic(itpcC[thisCond])
+#	gamma = overall*scale*itpcC[thisCond]
+	gamma = -log(logistic(overall*(scale+bias+itpcC[thisCond])))
 
         angles[i] ~ WrappedCauchy(mu,gamma)
 
@@ -88,4 +89,4 @@ acceptance = 0.75
 
 chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,numberP,electrodeN) , NUTS(acceptance) , MCMCThreads(),iterations,8)
 
-serialize("fit_all_"*string(runC)*"_p"*string(numberP)*"_f"*string(freqC)*".jls", chain)    
+serialize("reuse_"*string(runC)*"_p"*string(numberP)*"_f"*string(freqC)*".jls", chain)    
