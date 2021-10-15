@@ -1,0 +1,14 @@
+
+some bash scripts used for running the code - to work they should be
+in the .. folder.
+
+range_run.sh is a loop which calls run_job.sh for different
+frequencies; it passes $1 + i as runC where i is the loop variable, it
+passes $2 as name and $3 as comment
+
+run_job.sh runs sbatch with $1 $2 $3 as arguments, ultimately giving
+freq, runC and name, it also outputs the time, jobID, $1 $2 $3 $4 to
+log.txt. The $4 appears nowhere else and is intended as a comment for
+the log file.
+
+fit.sh is the actual slurm script
