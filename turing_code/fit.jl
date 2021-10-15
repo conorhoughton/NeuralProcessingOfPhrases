@@ -1,27 +1,17 @@
 # first go at modelling some data
 
-using DynamicHMC, Turing
+using Turing
 using Serialization
 using Random
 using MCMCChains
+using ArgParse
+
 
 #Random.seed!(0)
 
 include("general.jl")
 include("wrapped_cauchy.jl")
 include("bundt.jl")
-
-runC=38
-
-freqC=21
-
-numberP=16
-
-electrodeN=32
-
-
-experiment=load(collect(5:4+numberP),freqC)
-experiment=experiment[(experiment.freqC.==freqC) .& (experiment.electrode.<=electrodeN),:]
 
 @model function fitWrapped(angles,conditions,participants,electrodes,conditionN,participantN,electrodeN,::Type{T}=Float64) where {T}
 
@@ -39,8 +29,7 @@ experiment=experiment[(experiment.freqC.==freqC) .& (experiment.electrode.<=elec
 
     bias ~ Exponential(1.0)
 
-#    scale ~ Exponential(1.0)
-
+    scale ~ Exponential(1.0)
 
 
     x = Array{Vector{T}}(undef,(participantN,electrodeN))
@@ -65,8 +54,10 @@ experiment=experiment[(experiment.freqC.==freqC) .& (experiment.electrode.<=elec
       	#r ~ Beta(itpcC[thisCond],1.0)	
 
 #	gamma = -log(logistic(scale*itpcC[thisCond])*logistic(scale*itpcE[thisElec])*logistic(scale*itpcP[thisPart]))-log(logistic(bias))
-#	gamma = -log(logistic(scale*(itpcC[thisCond]+itpcE[thisElec]+itpcP[thisPart])+bias))
-	gamma = itpcC[thisCond]+itpcE[thisElec]+itpcP[thisPart] + bias
+
+	gamma = -log(logistic(scale*(itpcC[thisCond]+itpcE[thisElec]+itpcP[thisPart]+bias)))
+        
+#	gamma = itpcC[thisCond]+itpcE[thisElec]+itpcP[thisPart] + bias
 
         angles[i] ~ WrappedCauchy(mu,gamma)
 
@@ -74,25 +65,66 @@ experiment=experiment[(experiment.freqC.==freqC) .& (experiment.electrode.<=elec
 
 end
 
+function parseCommandLine()
+    s = ArgParseSettings()
+    @add_arg_table s begin
+        "--freqC"
+        help = "which frequency to run on"
+        arg_type = Int
+        default = 21
+        
+        "--runC"
+        help = "an optional addition to the output file name"
+        arg_type = Int
+        default = -1
+        
+        "--name"
+        help = "name root for the output files"
+        arg_type = String
+        default = "chain"    
+
+        "--iterations"
+        help = "number of iterations for the sampler"
+        arg_type = Int
+        default = 100
+
+    end
+
+    return parse_args(s)
+end
+
+parsedArgs=parseCommandLine()
+
+
+runC=38
+freqC=parsedArgs["freqC"]
+
+numberP=2
+electrodeN=2
+conditionN=6
+
+experiment=load(collect(5:4+numberP),freqC)
+
+experiment=experiment[(experiment.freqC.==freqC) .& (experiment.electrode.<=electrodeN),:]
+
+
 angles=experiment.angle
 
 participants = [x-4 for x in experiment.participant]
 conditions   = experiment.conditionC
 electrodes   = experiment.electrode
 
-
-iterations = 100
+iterations = parsedArgs["iterations"]
 acceptance = 0.75
 
-ϵ = 0.05
-τ = 10
+chain = sample(fitWrapped(angles,conditions,participants,electrodes,conditionN,numberP,electrodeN) , NUTS(acceptance) , MCMCThreads(),iterations,8)
 
-#chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,numberP,electrodeN) , DynamicNUTS() , MCMCThreads(),iterations,4)
+chainName=parsedArgs["name"]
 
-#chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,numberP,electrodeN) , HMCDA(500, 0.65, 0.3) , MCMCThreads(),iterations,8)
+if parsedArgs["runC"]>0
+    chainName=chainName*"_r"*string(runC)
+end
 
-#chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,numberP,electrodeN) , SGHMC((0.01,0.1)) , MCMCThreads(),iterations,4)
+chainName=chainName*"_f"*string(freqC)*".jls"
 
-chain = sample(fitWrapped(angles,conditions,participants,electrodes,6,numberP,electrodeN) , NUTS(acceptance) , MCMCThreads(),iterations,8)
-
-serialize("fit_all_"*string(runC)*"_p"*string(numberP)*"_f"*string(freqC)*".jls", chain)    
+serialize(chainName, chain)    
