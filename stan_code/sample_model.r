@@ -9,6 +9,7 @@ model_file_path     <- args[1]                  # Stan Model File Path
 iter_n              <- as.integer(args[2])      # Number of sampling iterations
 freq_band           <- as.integer(args[3])      # What frequency
 id                  <- args[4]                  # Character indetifier for saved model reference
+print(model_file_path)
 
 # What participants to run from
 part_lst <- read_csv("data/participants.csv", col_types="int")
@@ -32,8 +33,17 @@ stan_data <-list("N"= length(df$angle),
 # Not all intermediate parameters are of interest, so specify ones to ignore. Also keeps output size down.
 drop_params <- c("mu_vec", "gamma_vec")
 
-# Run the stan model
-fit <- stan(file=model_file_path, data=stan_data, iter=iter_n, chains=1, include = FALSE, pars=drop_params)
+# Run the stan model, uncomment for MCMC
+#fit <- stan(file=model_file_path, data=stan_data, iter=iter_n, chains=1, include = FALSE, pars=drop_params)
+
+# Optimising, MVN posterior approximation
+sm <- stan_model(file=model_file_path)
+fit <- optimizing(object=sm,
+                  data=stan_data,
+                  verbose=TRUE,
+                  as_vector=FALSE,
+                  importance_resampling=TRUE,
+                  draws=iter_n)
 
 # Save fit
 print("Saving Fit")

@@ -3,4 +3,4 @@ data/full_data.csv
 fitted_models/*.rds
 .ipynb_checkpoints/*ipynb
 output.txt
-
+*.ipynb
