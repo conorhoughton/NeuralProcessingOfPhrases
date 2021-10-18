@@ -1,11 +1,14 @@
 #!/bin/bash -login
-#SBATCH --nodes=1
+
 #SBATCH --mem=5000M
 #SBATCH --partition=cpu
-#sBATCH --ntasks-per-node=8
+
 #SBATCH --job-name=fit
 #SBATCH --time=4-00:00:00
 
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8
 
 
 module add languages/julia/1.6.3
