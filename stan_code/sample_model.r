@@ -33,10 +33,14 @@ stan_data <-list("N"= length(df$angle),
 # Not all intermediate parameters are of interest, so specify ones to ignore. Also keeps output size down.
 drop_params <- c("mu_vec", "gamma_vec")
 
+#################################### MCMC ######################################
+
 # Run the stan model, uncomment for MCMC
 #fit <- stan(file=model_file_path, data=stan_data, iter=iter_n, chains=1, include = FALSE, pars=drop_params)
 
-# Optimising, MVN posterior approximation
+################################################################################
+
+################### Optimising, MVN posterior approximation ####################
 sm <- stan_model(file=model_file_path)
 fit <- optimizing(object=sm,
                   data=stan_data,
@@ -44,6 +48,8 @@ fit <- optimizing(object=sm,
                   as_vector=FALSE,
                   importance_resampling=TRUE,
                   draws=iter_n)
+
+################################################################################
 
 # Save fit
 print("Saving Fit")
