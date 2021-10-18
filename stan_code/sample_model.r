@@ -27,7 +27,7 @@ stan_data <-list("N"= length(df$angle),
                  "P" = length(part_lst$participant),
                  "electrode_idx"   = df$electrode,
                  "condition_idx"   = as.numeric(factor(df$condition)),
-                 "participant_idx" = df$participant,
+                 "participant_idx" = as.numeric(factor(df$participant)),
                  "y" = df$angle)
 
 # Not all intermediate parameters are of interest, so specify ones to ignore. Also keeps output size down.
