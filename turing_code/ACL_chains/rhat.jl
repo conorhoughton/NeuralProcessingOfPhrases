@@ -9,7 +9,8 @@ using Gadfly,Cairo,Fontconfig
 chn=deserialize("model1_chain.jls")
 df=DataFrame(summarize(chn))
 
-lyr1=Gadfly.layer(df, y=:ess, x=:rhat, Geom.point,Theme(point_size=1pt,default_color="black"),yintercept=[100],xintercept=[1.06], Geom.vline, Geom.hline);
+#lyr1=Gadfly.layer(df, y=:ess, x=:rhat, Geom.point,Theme(point_size=1pt,default_color="black"),yintercept=[100],xintercept=[1.06], Geom.vline, Geom.hline);
+lyr1=Gadfly.layer(df, y=:ess, x=:rhat, Geom.point,Theme(point_size=1pt,default_color="black"));
 
 df=filter(:parameters => x -> occursin(r"itpcC",string(x)), df)
 

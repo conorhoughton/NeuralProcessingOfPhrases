@@ -48,6 +48,6 @@ lyrAverage6=layer(df, x="itpcC[6]", Geom.density,Theme(default_color="black",lin
 # plt456=hstack(plt4,plt5,plt6);
 # plt=vstack(plt123,plt456);
 
-plt=plot(lyrAverage1,lyrAverage2,lyrAverage3,lyrAverage4,lyrAverage5,lyrAverage6, lyrChains1,lyrChains2,lyrChains3,lyrChains4,lyrChains5,lyrChains6,Guide.xlabel("MP"),Theme(background_color="white",key_position = :none),Coord.Cartesian(xmin=-6,xmax=3))
+plt=plot(lyrAverage1,lyrAverage2,lyrAverage3,lyrAverage4,lyrAverage5,lyrAverage6, lyrChains1,lyrChains2,lyrChains3,lyrChains4,lyrChains5,lyrChains6,Guide.xlabel("MP"),Theme(background_color="white",key_position = :none),Coord.Cartesian(xmin=-6,xmax=3),yintercept=[0],Geom.hline(size=[2pt],color=["black"]))
 
 draw(PNG("density.png", 16cm, 6cm), plt)
