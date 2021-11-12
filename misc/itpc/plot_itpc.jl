@@ -17,11 +17,12 @@ oldNames=["Column"*string(i) for i in 6:21]
 participants=[string(i) for i in 1:16]
 
 rename!(df,[:Column1].=>[:frequency])
-rename!(df,oldNames.=>newNames)
+rename!(df,oldNames.=>participants)
 
 df=stack(df,2:17)
 
-layer1=layer(df,x=:frequency,y=:value,group=:variable,Geom.line)
+#layer1=layer(df,x=:frequency,y=:value,group=:variable,Geom.line)
+layer1=layer(df,x=:frequency,y=:value,group=:variable,Geom.boxplot[(; method=:tukey, suppress_outliers=false)]);
 
 gdf = groupby(df, :frequency)
 gdf=combine(gdf, nrow, :value => mean => :mean)
