@@ -47,7 +47,7 @@ else
     locationsDF=loadLocs()
     
     draw_size=8
-    lambda=1.0 #needs to be adjusted to get the circle circular
+    lambda=1.1 #needs to be adjusted to get the circle circular
     dot_size=draw_size/3 #also divided by 10
 
     outside=2
@@ -56,8 +56,9 @@ else
         layer(electrodeValues,x=:x,y=:y,color=:means,size=[dot_size*mm]),
         layer(x=[0.0],y=[0.0],size=[(draw_size*0.375)*cm],color=[colorant"grey"]),
         layer(x=[0.0],y=[1.8],shape=[Shape.utriangle],size=[(draw_size*0.065)*cm],color=[colorant"grey"]),
-        Theme(background_color="white",key_position = :none,grid_color = nothing),
-        Guide.xticks(ticks=nothing),Guide.yticks(ticks=nothing),Guide.xlabel(nothing),Guide.ylabel(nothing),
+        Theme(background_color="white",key_position = :below,grid_color = nothing),
+        Guide.xticks(ticks=nothing),Guide.yticks(ticks=nothing),
+        Guide.xlabel(nothing),Guide.ylabel(nothing),Guide.colorkey(title="mean"),
         Coord.Cartesian(xmin=-outside,xmax=outside,ymin=-outside,ymax=outside)
     )
     

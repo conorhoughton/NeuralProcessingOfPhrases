@@ -58,9 +58,9 @@ layer4=layer(x=siga,xend=siga,y=sigy1,yend=sigy2,Geom.segment,Theme(default_colo
 
 layer5=layer(x=sigb,xend=sigb,y=sigy1,yend=sigy2,Geom.segment,Theme(default_color="black"));
 
-plt=plot(layer2,layer5,layer4,layer3,layer1,Theme(background_color="white"));
+plt=plot(layer2,layer5,layer4,layer3,layer1,Theme(background_color="white"),Guide.xlabel(nothing),Guide.ylabel("ITPC"));
 
-draw(PNG("test.png",8cm,8cm),plt)
+draw(PNG("itpc.png",8cm,8cm),plt)
 
 if printSig
 
