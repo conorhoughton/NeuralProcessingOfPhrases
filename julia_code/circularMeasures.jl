@@ -7,13 +7,13 @@ using HypothesisTests
 include("general.jl")
 include("mean_res.jl")
 
-filename_path="/home/cscjh/Experiment2/data/"
-filename_file="file_list.txt"
+filename_path="../data/ft/"
+filename_file="file_list_16.txt"
 
 lines=readlines(filename_path*filename_file)
 
-filepath="/home/cscjh/Experiment2/processed_data/ft/"
-filename_extra="_fg.dat"
+filepath="../data/ft/"
+filename_extra="_ft.dat"
 filename_trial="_trial.dat"
 freqFile="freq.txt"
 
@@ -36,7 +36,6 @@ open(filepath*freqFile) do file
 grammar =getGrammarPeaks()
 freqI=findfirst(frequencies.==grammar[2])
 
-
 for (participantI,line) in enumerate(lines)
 
     global itpc
@@ -55,11 +54,10 @@ for (participantI,line) in enumerate(lines)
         end
     end
     
-    condPhase=condition(filename,keyFile)
+    condPhase=conditionP5to20(filename,keyFile)
 
     stimulus="anan"
 
-    
     
     bigA=phase(condPhase[stimulus])
 
