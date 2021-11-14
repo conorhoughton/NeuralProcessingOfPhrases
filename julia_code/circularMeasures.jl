@@ -18,7 +18,7 @@ filename_trial="_trial.dat"
 freqFile="freq.txt"
 
 participantN=16 # number of participants
-frequencyN=58
+frequencyN=21
 electrodeN=32
 stimuli=getStimuli()
 stimuliN=length(stimuli)
