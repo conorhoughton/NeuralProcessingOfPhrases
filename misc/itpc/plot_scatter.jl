@@ -5,7 +5,7 @@ using DataFrames
 using Statistics
 using HypothesisTests
 
-printSig=true
+printSig=false
 
 conditions = ["anan","advp","rrrv","phmi","avav","rrrr"]
 
@@ -58,9 +58,11 @@ layer4=layer(x=siga,xend=siga,y=sigy1,yend=sigy2,Geom.segment,Theme(default_colo
 
 layer5=layer(x=sigb,xend=sigb,y=sigy1,yend=sigy2,Geom.segment,Theme(default_color="black"));
 
-plt=plot(layer2,layer5,layer4,layer3,layer1,Theme(background_color="white"),Guide.xlabel(nothing),Guide.ylabel("ITPC"));
+plt=plot(layer2,layer5,layer4,layer3,layer1,style(major_label_font="CMU Serif",minor_label_font="CMU Serif",
+                                      major_label_font_size=16pt,minor_label_font_size=14pt),Theme(background_color="white"),Guide.xlabel(nothing),Guide.ylabel("ITPC"));
 
-draw(PNG("itpc.png",8cm,8cm),plt)
+#draw(PNG("itpc.png",8cm,8cm),plt)
+draw(PDF("itpc.pdf",8cm,8cm),plt)
 
 if printSig
 
