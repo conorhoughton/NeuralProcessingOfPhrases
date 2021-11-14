@@ -37,7 +37,7 @@ function loadDF(chainName)
 end
 
 if make==true
-    electrodeValues=loadDF("model1_chain.jls")
+    electrodeValues=loadDF("model1_chainₙew.jls")
     serialize("model1_electrodes.df",electrodeValues)
 elseif printValues==true
     electrodeValues=deserialize("model1_electrodes.df")
@@ -56,11 +56,12 @@ else
         layer(electrodeValues,x=:x,y=:y,color=:means,size=[dot_size*mm]),
         layer(x=[0.0],y=[0.0],size=[(draw_size*0.375)*cm],color=[colorant"grey"]),
         layer(x=[0.0],y=[1.8],shape=[Shape.utriangle],size=[(draw_size*0.065)*cm],color=[colorant"grey"]),
-        Theme(background_color="white",key_position = :below,grid_color = nothing),
         Guide.xticks(ticks=nothing),Guide.yticks(ticks=nothing),
-        Guide.xlabel(nothing),Guide.ylabel(nothing),Guide.colorkey(title="mean"),
-        Coord.Cartesian(xmin=-outside,xmax=outside,ymin=-outside,ymax=outside)
+        Guide.xlabel(nothing),Guide.ylabel(nothing),Guide.colorkey(title="α_e"),
+        Coord.Cartesian(xmin=-outside,xmax=outside,ymin=-outside,ymax=outside),
+        style(major_label_font="CMU Serif",minor_label_font="CMU Serif"),
+        Theme(background_color="white",key_position = :below,grid_color = nothing),
     )
     
-    draw(PNG("eeg.png", lambda*draw_size*cm, draw_size*cm), thisPlot)
+    draw(PDF("eeg.pdf", lambda*draw_size*cm, draw_size*cm), thisPlot)
 end

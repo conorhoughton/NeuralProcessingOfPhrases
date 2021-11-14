@@ -6,7 +6,7 @@ using StatisticalRethinking
 using Gadfly,Cairo,Fontconfig
 
 
-bigFrame=DataFrame(deserialize("model1_chain.jls"))
+bigFrame=DataFrame(deserialize("model1_chain_new.jls"))
 
 bigFrame=bigFrame[!,r"itpcP"]
 
@@ -24,7 +24,12 @@ end
 
 sort!(partFrame,:mean)
 
-plt=Gadfly.plot(partFrame, y=:name,x=:mean, xmin=:min, xmax=:max, Geom.point, Geom.errorbar,Theme(background_color="white",errorbar_cap_length=0mm,line_width=0.25mm,default_color="black"),Guide.xlabel("αₚ"),Guide.ylabel("participants"));
+plt=Gadfly.plot(partFrame, y=:name,x=:mean, xmin=:min, xmax=:max,
+                Geom.point, Geom.errorbar,Guide.xlabel("α_p"),
+                Guide.ylabel("participants"),Guide.yticks(label=false),
+                style(major_label_font="CMU Serif",minor_label_font="CMU Serif"),
+                Theme(background_color="white",errorbar_cap_length=0mm,line_width=0.25mm,default_color="black")
+                );
 
-draw(PNG("participants.png", 5cm, 5cm), plt)
+draw(PDF("participants.pdf", 8cm, 8cm), plt)
 

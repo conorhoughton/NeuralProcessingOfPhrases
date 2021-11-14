@@ -31,4 +31,5 @@ layer2=layer(means,x=:variable, y=:mean, shape=[Shape.hline],Geom.point,Theme(de
 
 plt=plot(layer2,layer1,Coord.Cartesian(ymin=-5,ymax=5),style(major_label_font="CMU Serif",minor_label_font="CMU Serif"),Theme(background_color="white",key_position = :none), Guide.xlabel(nothing),Guide.ylabel("α_c"))
 
-draw(PNG("violin.png",8cm,8cm),plt)
+#draw(PNG("violin.png",8cm,8cm),plt)
+draw(PDF("violin.pdf",8cm,8cm),plt)
