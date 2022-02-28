@@ -1,5 +1,9 @@
 suppressMessages(library(tidyverse))
 suppressMessages(library(rstan))
+suppressMessages(library(bayesplot))
+suppressMessages(library(stringr))
+color_scheme_set("purple")
+
 rstan_options(auto_write = TRUE);
 options(mc.cores = parallel::detectCores());
 
@@ -36,7 +40,7 @@ drop_params <- c("mu_vec", "gamma_vec")
 #################################### MCMC ######################################
 
 # Run the stan model, uncomment for MCMC
-#fit <- stan(file=model_file_path, data=stan_data, iter=iter_n, chains=1, include = FALSE, pars=drop_params)
+#fit <- stan(file=model_file_path, data=stan_data, iter=iter_n, chains=4, include = FALSE, pars=drop_params)
 
 ################################################################################
 
@@ -54,3 +58,35 @@ fit <- optimizing(object=sm,
 # Save fit
 print("Saving Fit")
 saveRDS(fit, paste("fitted_models/fit_", id, "_", freq_band, ".rds", sep=""))
+
+############################ Basic Plotting ####################################
+
+# Plot the marginals.
+idxs <- which(str_detect(colnames(fit$theta_tilde), "alpha_C\\["))
+alpha_C <- fit$theta_tilde[,idxs]
+colnames(alpha_C) <- c('ML','AN','AV','MP','RR','RV') # Give the columns more usful names
+
+# order the cols by mean
+idx_order <- order(colMeans(fit$theta_tilde[,idxs]))
+alpha_C <- alpha_C[, idx_order]
+
+ggsave("plots/ac_marginals.png", mcmc_areas(alpha_C))
+
+### And for differences
+diffs     <- matrix(0, nrow=iter_n, ncol=15)
+col_names <- vector(length=15)
+diff_pairs <- combn(c(1:6),2)
+diff_names <- combn(colnames(alpha_C),2)
+
+for(i in 1:15){
+    pair         <- diff_pairs[,i]
+    diffs[,i]    <- alpha_C[,pair[2]] - alpha_C[,pair[1]]
+    col_names[i] <- paste(diff_names[,i][2], " - ", diff_names[,i][1])
+
+}
+
+colnames(diffs) <-col_names
+idx_order <- order(colMeans(diffs))
+diffs     <- diffs[, idx_order]
+
+ggsave("plots/ac_diffs.png", mcmc_intervals(diffs, prob_outer = .97))

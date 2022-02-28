@@ -29,7 +29,7 @@ parameters{
   vector[E] alpha_E;
   vector[C] alpha_C;
   vector[P] alpha_P;
-  real  s;
+  real<lower=0>   s;
   real alpha;
 }
 model{
