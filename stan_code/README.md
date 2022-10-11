@@ -14,8 +14,7 @@ The typical call is:
 
 ## 1.1 Optimisation
 Point estimates of the posterior can be obtained through optmisation. We used this to
-give a rough estimate of the model Behvaiour for frequencies that were not of interest. This is becuase
-the sampler is quite expensive to run across all 58 frequecies.
+give an estimate of the model behaviour for frequencies that were not of interest.
 
 The same procedure applies for optimisation without the choice for participant number:
 
@@ -24,12 +23,11 @@ The same procedure applies for optimisation without the choice for participant n
 # 2 Data efficiency (Figure 8)
 
 The amount of regualrisation necessary depends on the amount of data, we chose to fix
-nu at 30 when testing different participant sizes to help keep the sampler well behaved at lower data sizes.
-This brings the multivariate t distribution much closer to a multivariate normal.
+$\nu = 30$ when fitting across different data sizes. This gives the  multivariate t distribution similar behaviour to that of the multivariate normal.
 
 # 3 Plotting scripts
 
-Plotting scripts are self contained scripts. Each script plots Figures from the paper:
+Plotting scripts plots Figures from the paper, saving the output to the correponding folder. These can be run from the command line using the following command:
 
 ``` Rscript <plot_script.r> ```
 
