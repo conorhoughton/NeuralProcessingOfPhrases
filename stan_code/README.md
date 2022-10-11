@@ -1,33 +1,33 @@
-# Running the Sampler
+# 1 Running the Sampler
 
-The sampler is invoked through the run_sampler.r script. This takes in a set of parameters to
-define the data to run on, any any sampling parameters:
+The sampler is invoked through the run_sampler.r script. This takes in the following set of parameters from the command line:
 
-model_file_path: A string specifiying location of the stan model
-iter_n: Total number of sampler iteratiosn (half go to warmup)
-freq_band: Specify what freqeuncy to fit for (21  = phase)
-model_id: String to help identify model fit
-n_part : number of participants to use in analysis. (max is 16.)
+1. **model_file_path** : A string specifiying location of the stan model
+2. **iter_n** : Total number of sampler iteratiosn (half go to warmup)
+3. **freq_band** : Integer specifying the frequency of interest (phase = 21)
+4. **model_id** : String to help identify model fit
+5. **n_part** : Number of participants to use in analysis (maximum of 16).
 
 The typical call is:
 
-Rscript run_sampler.r "models/model_2t.stan" 2000 21 "m2t" 16
+``` Rscript run_sampler.r "models/model_2t.stan" 2000 21 "m2t" 16 ```
 
-Then explain for optimisation.
-
-# Optimisation
+## 1.1 Optimisation
 Point estimates of the posterior can be obtained through optmisation. We used this to
-give a rough estimate of the model Behvaiour for frequencies that were not of interest.
-We required a quick check against the sample results and this was an efficient way to do it. This is becuase
+give a rough estimate of the model Behvaiour for frequencies that were not of interest. This is becuase
 the sampler is quite expensive to run across all 58 frequecies.
 
-# Data efficiency (Figure 8)
+The same procedure applies for optimisation without the choice for participant number:
+
+``` Rscript run_optim.r "models/model_2t.stan" 2000 21 "m2t" ```
+
+# 2 Data efficiency (Figure 8)
 
 The amount of regualrisation necessary depends on the amount of data, we chose to fix
 nu at 30 when testing different participant sizes to help keep the sampler well behaved at lower data sizes.
 This brings the multivariate t distribution much closer to a multivariate normal.
 
-# Plotting scripts
+# 3 Plotting scripts
 
 Plotting scripts are self contained scripts whos title identifies them with the corresponding
 figure in the manuscript.
