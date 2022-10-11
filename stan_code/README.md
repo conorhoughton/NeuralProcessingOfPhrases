@@ -29,14 +29,15 @@ This brings the multivariate t distribution much closer to a multivariate normal
 
 # 3 Plotting scripts
 
-Plotting scripts are self contained scripts whos title identifies them with the corresponding
-figure in the manuscript.
+Plotting scripts are self contained scripts. Each script plots Figures from the paper:
 
-# Acknowledgements
-For the EEG headcaps the information provided within the following blog post was helpful.
-https://www.mattcraddock.com/blog/2017/02/25/erp-visualization-creating-topographical-scalp-maps-part-1/
+``` Rscript <plot_script.r> ```
 
-The following information from the Stan forums was also of use when considering model construction.
-https://discourse.mc-stan.org/t/divergence-treedepth-issues-with-unit-vector/8059/3
-https://discourse.mc-stan.org/t/a-better-unit-vector/26989/17
-https://discourse.mc-stan.org/t/correlated-random-walk-with-measurement-error-trouble-converging/5255/13
+# 4 Acknowledgements
+The information provided within the following blog post was adapted and used for the headcap figures.
+* https://www.mattcraddock.com/blog/2017/02/25/erp-visualization-creating-topographical-scalp-maps-part-1/
+
+The following threads from the Stan forums were very helpful in highlighting difficulties involved with sampling directional statistics.
+* https://discourse.mc-stan.org/t/divergence-treedepth-issues-with-unit-vector/8059/3
+* https://discourse.mc-stan.org/t/a-better-unit-vector/26989/17
+* https://discourse.mc-stan.org/t/correlated-random-walk-with-measurement-error-trouble-converging/5255/13
