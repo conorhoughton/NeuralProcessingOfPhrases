@@ -1,10 +1,7 @@
-// User defined probability functions (up to constant)
+// User defined probability functions - wrapped Cauchy (up to a constant)
 functions{
     real wrapped_cauchy_lpdf(vector y, real mu, real gamma){
       return sum(log(sinh(gamma)) - log(cosh(gamma) - cos(y-mu)));
-    }
-    real inv_gaussian_lpdf(vector y, real mu, real lambda){
-      return sum(0.5*log(lambda) - 1.5*log(y) - (lambda*square((y-mu))) ./ (2*mu^2*y));
     }
 }
 data{
@@ -25,16 +22,16 @@ parameters{
   vector[C] a_c;
 
   // Pooling slopes for participants and electrodes
-  vector[C]               a_p_raw[P];  // Participant differences for this condition.
-  vector[C]               a_e_raw[E];  // Electrode differences for this condition
+  vector[C]               a_p_raw[P];
+  vector[C]               a_e_raw[E];
 
-  vector<lower=0>[C]      s_p;         // Standard deviation of participant slopes
-  vector<lower=0>[C]      s_e;         // Standard deviation of electrode slopes
+  vector<lower=0>[C]      s_p; // Standard deviation of participant slopes
+  vector<lower=0>[C]      s_e; // Standard deviation of electrode slopes
 
-  cholesky_factor_corr[C] L_p;         // Cholesky factor of the correlation matrix
+  cholesky_factor_corr[C] L_p; // Cholesky factor of the correlation matrix
 
   real<lower=0> phi;
-  real<lower=2> nu;
+  real<lower=2> nu; // Degrees of freedom
 
   // Angle
   vector[2] xy_uncnstr[N];
@@ -44,8 +41,8 @@ transformed parameters{
   vector[C]      a_cv;
 
   // Pooling slopes for participants and electrodes
-  vector[C]   a_p[P];
-  vector[C]   a_e[E];
+  vector[C]   a_p[P]; // Participants
+  vector[C]   a_e[E]; // Electrodes
   matrix[C,C] sigma_L_p;
 
   // Vectorisations
@@ -79,10 +76,10 @@ model{
   phi ~ inv_gamma(nu*0.5,nu*0.5);
 
   a_cv ~ beta(3,2);
-  target += a_c - 2*log(exp(a_c) + 1);
+  target += a_c - 2*log(exp(a_c) + 1); // Jacobian adjustment
 
   L_p ~ lkj_corr_cholesky(2.0);
-  s_p ~ normal(0, 0.5); // Scale by participant number
+  s_p ~ normal(0, 0.5);
   s_e ~ normal(0, 0.5);
 
   for(i in 1:P){
@@ -93,8 +90,8 @@ model{
     a_e_raw[i] ~ std_normal();
   }
 
-  vector_len ~ gamma(10,10);//inv_gaussian(1, 10);
-  target += -log(vector_len);
+  vector_len ~ gamma(10,10);
+  target += -log(vector_len); // Jacobian adjustment
 
   // Observations
   for(i in 1:N){
