@@ -1,42 +1,41 @@
-# Running the Sampler
+# 1 Running the Sampler
 
-The sampler is invoked through the run_sampler.r script. This takes in a set of parameters to
-define the data to run on, any any sampling parameters:
+The sampler is invoked through the run_sampler.r script. This takes in the following set of parameters from the command line:
 
-model_file_path: A string specifiying location of the stan model
-iter_n: Total number of sampler iteratiosn (half go to warmup)
-freq_band: Specify what freqeuncy to fit for (21  = phase)
-model_id: String to help identify model fit
-n_part : number of participants to use in analysis. (max is 16.)
+1. **model_file_path** : A string specifiying location of the stan model
+2. **iter_n** : Total number of sampler iteratiosn (half go to warmup)
+3. **freq_band** : Integer specifying the frequency of interest (phase = 21)
+4. **model_id** : String to help identify model fit
+5. **n_part** : Number of participants to use in analysis (maximum of 16).
 
 The typical call is:
 
-Rscript run_sampler.r "models/model_2t.stan" 2000 21 "m2t" 16
+``` Rscript run_sampler.r "models/model_2t.stan" 2000 21 "m2t" 16 ```
 
-Then explain for optimisation.
-
-# Optimisation
+## 1.1 Optimisation
 Point estimates of the posterior can be obtained through optmisation. We used this to
-give a rough estimate of the model Behvaiour for frequencies that were not of interest.
-We required a quick check against the sample results and this was an efficient way to do it. This is becuase
-the sampler is quite expensive to run across all 58 frequecies.
+give an estimate of the model behaviour for frequencies that were not of interest.
 
-# Data efficiency (Figure 8)
+The same procedure applies for optimisation without the choice for participant number:
+
+``` Rscript run_optim.r "models/model_2t.stan" 2000 21 "m2t" ```
+
+# 2 Data efficiency (Figure 8)
 
 The amount of regualrisation necessary depends on the amount of data, we chose to fix
-nu at 30 when testing different participant sizes to help keep the sampler well behaved at lower data sizes.
-This brings the multivariate t distribution much closer to a multivariate normal.
+$\nu = 30$ when fitting across different data sizes. This gives the  multivariate t distribution similar behaviour to that of the multivariate normal.
 
-# Plotting scripts
+# 3 Plotting scripts
 
-Plotting scripts are self contained scripts whos title identifies them with the corresponding
-figure in the manuscript.
+Plotting scripts plots Figures from the paper, saving the output to the correponding folder. These can be run from the command line using the following command:
 
-# Acknowledgements
-For the EEG headcaps the information provided within the following blog post was helpful.
-https://www.mattcraddock.com/blog/2017/02/25/erp-visualization-creating-topographical-scalp-maps-part-1/
+``` Rscript <plot_script.r> ```
 
-The following information from the Stan forums was also of use when considering model construction.
-https://discourse.mc-stan.org/t/divergence-treedepth-issues-with-unit-vector/8059/3
-https://discourse.mc-stan.org/t/a-better-unit-vector/26989/17
-https://discourse.mc-stan.org/t/correlated-random-walk-with-measurement-error-trouble-converging/5255/13
+# 4 Acknowledgements
+The information provided within the following blog post was adapted and used for the headcap figures.
+* https://www.mattcraddock.com/blog/2017/02/25/erp-visualization-creating-topographical-scalp-maps-part-1/
+
+The following threads from the Stan forums were very helpful in highlighting difficulties involved with sampling directional statistics.
+* https://discourse.mc-stan.org/t/divergence-treedepth-issues-with-unit-vector/8059/3
+* https://discourse.mc-stan.org/t/a-better-unit-vector/26989/17
+* https://discourse.mc-stan.org/t/correlated-random-walk-with-measurement-error-trouble-converging/5255/13
