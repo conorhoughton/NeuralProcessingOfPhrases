@@ -1,21 +1,6 @@
 library(tidyverse)
 library(viridis)
-
-circleFun <- function(center = c(0,0),diameter = 2, npoints = 100){
-  r = diameter / 2
-  tt <- seq(0,2*pi,length.out = npoints)
-  xx <- center[1] + r * cos(tt)
-  yy <- center[2] + r * sin(tt)
-  return(data.frame(x = xx, y = yy))
-}
-
-dens_func <- function(x,y){
-    return(dgamma(sqrt(x^2+y^2),shape = 10,rate = 10) * (1/sqrt(x^2 +y^2)))
-}
-
-WC_d <- function(theta, mu, gamma){
-    (1/(2*pi)) * sinh(gamma) / (cosh(gamma) - cos(theta-mu))
-}
+source("helper_functions.r")
 
 theme_set(theme_classic(base_size = 10,base_family="Times New Roman"))
 theme_update(legend.position = "none",

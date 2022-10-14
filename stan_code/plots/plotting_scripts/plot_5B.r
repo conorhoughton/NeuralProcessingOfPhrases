@@ -3,24 +3,29 @@ library(tidyverse)
 library(reshape2)
 library(rstan)
 
-fit <- readRDS("../../fitted_models/m2t_50_fit.rds")
-
-################################################################################
-############################ Draw the Marginals ################################
-################################################################################
+string_swap <- function(x){
+	grps <- unlist(strsplit(x, " "))[c(1,3)]
+	paste(grps[2], "-", grps[1], sep=" ")
+}
 
 theme_set(theme_classic(base_size = 10,base_family="Times New Roman"))
 theme_update(legend.position="none",
 	     axis.title.y=element_text(face="italic", angle = 0, vjust = 0.5),
 	     axis.title.x=element_blank())
 
-eta           <- 1-extract(fit, "a_cv")$a_cv
-colnames(eta) <- c('ML','AN','AV','MP','RR','RV')
-eta           <- melt(eta,value.name = "x", varnames =  c("iter","cond") )
+fit <- readRDS("../../fitted_models/m2t_50_fit.rds")
 
-eta <- eta %>% mutate(cond = factor(cond, c("AN", "AV", "ML", "MP", "RR", "RV")))
+##############################
+#---- Draw the Marginals ----#
+##############################
 
-p <- ggplot(eta, aes(x = x, y = cond, fill = cond, group=cond, color=cond)) +
+R           <- 1-extract(fit, "a_cv")$a_cv
+colnames(R) <- c('ML','AN','AV','MP','RR','RV')
+R           <- melt(R,value.name = "x", varnames =  c("iter","cond") )
+
+R <- R %>% mutate(cond = factor(cond, c("AN", "AV", "ML", "MP", "RR", "RV")))
+
+p <- ggplot(R, aes(x = x, y = cond, fill = cond, group=cond, color=cond)) +
 			geom_violin(alpha=0.25) +
 			geom_linerange(stat = "summary",
 									  	fun.min = function(x) hdi(x, credMass = 0.9)[1],
@@ -31,25 +36,16 @@ p <- ggplot(eta, aes(x = x, y = cond, fill = cond, group=cond, color=cond)) +
 			coord_flip() +
 			xlab("") + xlab("")
 
-ggsave(plot=p, filename = "../Figure_5/eta.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")
+ggsave(plot=p, filename = "../Figure_5/R_marginals.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")
 
-################################################################################
-############################# Draw the Differences #############################
-################################################################################
+###################################################
+#---- Calculate difference pairs from samples ----#
+###################################################
 
-string_swap <- function(x){
-	grps <- unlist(strsplit(x, " "))[c(1,3)]
-	paste(grps[2], "-", grps[1], sep=" ")
-}
+# This is horribly complicated, having alphabetical order into stan will fix this,
+# although will now require code changing. This is a manual reordering to give the
+# same layout as in fig 2C
 
-theme_set(theme_classic(base_size = 10,base_family="Times New Roman"))
-theme_update(legend.position="none",
-						 axis.title.y=element_text(face="italic", angle = 0, vjust = 0.5),
-						 axis.title.x=element_blank(),
-					   axis.text.x = element_blank())
-
-# This is horribly complicated, having alphabetical order into stan will fix this, although will now require code changing
-# This is a manual reordering to give the same layout as in fig 2C
 diffs_c <- combn(c('ML','AN','AV','MP','RR','RV'),2)
 diffs_c_idx <- combn(c(1:6),2)
 
@@ -68,15 +64,8 @@ diff_order_idx[2,5]    <- diffs_c_idx[1,1]
 diff_order_idx[,6:15]  <- diffs_c_idx[,6:15]
 diff_order_idx[c(1,2),1] <- diff_order_idx[c(2,1),1] # AV needs more comparisons than ML to line up with adopted ordering
 
-################################################################################
-#----------------------------- Extract the fit --------------------------------#
-################################################################################
-eta           <- extract(fit, "a_cv")$a_cv
-colnames(eta) <- c('ML','AN','AV','MP','RR','RV')
-
-################################################################################
-#------------------ Calculate difference pairs from samples -------------------#
-################################################################################
+S           <- extract(fit, "a_cv")$a_cv
+colnames(S) <- c('ML','AN','AV','MP','RR','RV')
 
 # Create a df with electrode rows and columns for condition differences
 col_names  <- vector(length=15)
@@ -86,7 +75,7 @@ diffs      <- matrix(0, nrow=8000, ncol=15) # Hold the result
 
 for(i in 1:15){
     pair <- diff_idxs[,i]
-    diffs[,i] <- (eta[,pair[1]] - eta[,pair[2]]) *-1 # Multiply by -1 for mean resultant length difference.
+    diffs[,i] <- (S[,pair[1]] - S[,pair[2]]) * -1 # Multiply by -1 for mean resultant length difference.
     col_names[i] <- paste(diff_names[,i][1], "-", diff_names[,i][2], sep=" ")
 }
 
@@ -121,7 +110,7 @@ p <- ggplot(data=diffs, aes(x=ref_group, y=diffs, group=group, color=diff_group,
 								fun = median,
 								position=position_dodge2(preserve = "single",padding=0.5),alpha=0.25) +
 				geom_hline(aes(yintercept=0), alpha=0.50) +
-				scale_color_brewer(palette="Dark2") +#palvalues=c("#d95f02", "#7570b3", "#e7298a", "#66a61e", "#e6ab02"))# Dark2 but with first color cut off as this is never a difference color
-				scale_fill_brewer(palette="Dark2") + ylab("\u0394R")
+				scale_color_brewer(palette="Dark2") +
+				scale_fill_brewer(palette="Dark2") + ylab("\u0394R") + theme(axis.text.x = element_blank())
 
-ggsave(plot=p, filename = "../Figure_5/eta_diffs.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")
+ggsave(plot=p, filename = "../Figure_5/R_diffs.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")

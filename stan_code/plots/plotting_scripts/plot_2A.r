@@ -1,21 +1,11 @@
-library(ggplot2)
 library(tidyverse)
+source("helper_functions.r")
 
 theme_set(theme_classic(base_size = 10,base_family="Times New Roman"))
 theme_update(axis.title.y = element_text(angle = 0, vjust = 0.5, face="italic"),legend.position = "none")
 
-cabs <- function(x) sqrt(Re(x)**2 + Im(x)**2)
-
-fct_r <- function(x){
-    c('ML','AN','AV','MP','RR','RV')
-}
-
 # load the data
-data <- read_csv("../../data/full_data.csv", col_types =c("icciiiid??d"))
-data <- data %>% filter(!(participant %in% c(1,2,3,4)))  # Ignore the first four participants
-
-# Covert the ft coeffs to complex numbers - slow but works
-data$phase <- sapply(X=data$phase, FUN = function(x) as.complex(gsub(" ", "", substr(x,1,nchar(x)-1))))
+data <- load_data()
 
 mean_res <- data %>%  group_by(freq, condition, participant, electrode) %>%
                 summarise(mpa=cabs(mean(phase))) %>% # Over trials

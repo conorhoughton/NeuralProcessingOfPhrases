@@ -2,8 +2,7 @@ library(tidyverse)
 library(rstan)
 library(HDInterval)
 library(reshape2)
-
-cabs <- function(x) sqrt(Re(x)**2 + Im(x)**2)
+source("helper_functions.r")
 
 theme_set(theme_classic(base_size = 10, base_family="Times New Roman"))
 theme_update(legend.position = "none",axis.title.y = element_text(angle = 0, vjust = 0.5, face="italic"))
@@ -58,11 +57,8 @@ ggsave(plot = p, filename = "../Figure_8/hdi_bars.tiff", width = 2.6, height = 2
 ################
 
 # load the data
-data <- read_csv("../../data/full_data.csv", col_types =c("icciiiid??d"))
+data <- load_data()
 data <- data %>% filter(freqC==21)
-
-# Covert the ft coeffs to complex numbers - slow but works
-data$phase <- sapply(X=data$phase, FUN = function(x) as.complex(gsub(" ", "", substr(x,1,nchar(x)-1))))
 
 pvals <- vector(length=n_res)
 
@@ -85,7 +81,6 @@ for(i in n_min:16){
 # write the p values out for reference
 #df_pval <- data.frame("p_val"=pvals, n=16 - c(as.character(n_min):16) + 1)
 #write.csv(df_pval, "../Figure_reduced/p_vals.csv", row.names=F)
-
 
 p <- ggplot() +
    geom_hline(yintercept = 0.1, alpha=0.5) +

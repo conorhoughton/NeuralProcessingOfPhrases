@@ -3,18 +3,7 @@ library(tidyverse)
 library(reshape2)
 library(mgcv)
 library(rstan)
-
-inv_logit <- function(x){
-  return(1/(1+exp(-x)))
-}
-
-circleFun <- function(center = c(0,0),diameter = 2, npoints = 100){
-  r = diameter / 2
-  tt <- seq(0,2*pi,length.out = npoints)
-  xx <- center[1] + r * cos(tt)
-  yy <- center[2] + r * sin(tt)
-  return(data.frame(x = xx, y = yy))
-}
+source("helper_functions.r")
 
 theme_set(theme_void(base_size = 10, base_family="Times New Roman"))
 theme_update(axis.text.x=element_blank(),
@@ -57,7 +46,7 @@ for(i in 1:32){
     a_e[,i,] <- a_e[,i,] + a_c
 }
 
-alpha_CE <- 1- (1 / (1+exp(-a_e)))
+alpha_CE <- 1 - inv_logit(a_e) # Mean resulant length
 
 # Gives a (S * 32 * 6 array)
 
@@ -102,7 +91,8 @@ grid_points <- expand.grid(x = seq(-2, 2, length=N_points), y = seq(-2, 2, lengt
 
 for(i in 1:15){
   # Or Splines on spheres
-  spl1 <- gam(signal ~ s(x,y, bs = "sos", k=27),data=data.frame(signal=diffs[,i], x=layout$x, y=layout$y))
+  #spl1 <- gam(signal ~ s(x,y, bs = "sos", k=27),data=data.frame(signal=diffs[,i], x=layout$x, y=layout$y))
+  spl1 <- gam(signal ~ s(x,y, bs = "ts"),data=data.frame(signal=diffs[,i], x=layout$x, y=layout$y))
   datmat[,i] <- predict(spl1, grid_points, type = "response")
 }
 

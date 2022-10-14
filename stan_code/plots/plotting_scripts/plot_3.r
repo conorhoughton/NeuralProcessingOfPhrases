@@ -1,19 +1,15 @@
 library(tidyverse)
+source("helper_functions.r")
 
-theme_set(theme_classic(base_size = 10,base_family="Times New Roman"))
+theme_set(theme_classic(base_size = 10, base_family="Times New Roman"))
 theme_update(legend.position = "none",
 	     axis.title.y = element_text(angle = 0, vjust = 0.5))
-
-catan2 <- function(x) atan2(Im(x), Re(x))
 
 # Colored electrodes:   "T7", "P4", "F8"
 # Corresponding indexes "12", "26", "7"
 
-data <- read_csv("../../data/full_data.csv", col_types =c("icciiiid??d"))
-data <- data %>% filter(!(participant %in% c(1,2,3,4))) %>% filter(freqC==21, condition=="anan")
-
-# Covert the ft coeffs to complex numbers - slow but works
-data$phase <- sapply(X=data$phase, FUN = function(x) as.complex(gsub(" ", "", substr(x,1,nchar(x)-1))))
+data <- load_data()
+data <- data %>% filter(freqC==21, condition=="anan")
 
 mean_res <- data %>%
 							group_by(participant, electrode) %>%

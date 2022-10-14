@@ -1,23 +1,10 @@
 library(tidyverse)
 library(reshape2)
 library(mgcv)
+source("helper_functions.r")
 
-# Code adapted from : https://stackoverflow.com/questions/35019382/topoplot-in-ggplot2-2d-visualisation-of-e-g-eeg-data
-
-cabs <- function(x) sqrt(Re(x)**2 + Im(x)**2)
-
-fct_r <- function(x){
-    c('ML','AN','AV','MP','RR','RV')
-}
-
-# Points of a circle
-circleFun <- function(center = c(0,0),diameter = 2, npoints = 100){
-  r = diameter / 2
-  tt <- seq(0,2*pi,length.out = npoints)
-  xx <- center[1] + r * cos(tt)
-  yy <- center[2] + r * sin(tt)
-  return(data.frame(x = xx, y = yy))
-}
+# Code adapted from :
+# https://stackoverflow.com/questions/35019382/topoplot-in-ggplot2-2d-visualisation-of-e-g-eeg-data
 
 theme_set(theme_void(base_size = 10, base_family="Times New Roman"))
 theme_update(axis.text.x=element_blank(),
@@ -27,19 +14,15 @@ theme_update(axis.text.x=element_blank(),
              legend.position="left",
              legend.title = element_text(face="italic"))
 
-################################################################################
-#------------------ Calculate difference pairs from samples -------------------#
-################################################################################
-
-# Create a df with electrode rows and columns for condition differences
+########################################
+#----Calculate pairwise differences----#
+########################################
 
 # Load and filter data
-data <- read_csv("../../data/full_data.csv", col_types =c("icciiiid??d"))
-data <- data %>% filter(!(participant %in% c(1,2,3,4))) %>% filter(freqC==21)
+data <- load_data()
+data <- data %>% filter(freqC==21)
 
-# Covert the ft coeffs to complex numbers - slow but works
-data$phase <- sapply(X=data$phase, FUN = function(x) as.complex(gsub(" ", "", substr(x,1,nchar(x)-1))))
-
+# mean resultant length
 mean_res <- data %>%
                 group_by(participant, electrode, condition) %>%
                 summarise(mr=cabs(mean(phase))) # Across trials
@@ -71,9 +54,10 @@ mean_res <- as.matrix(mean_res %>% ungroup() %>% pivot_wider(names_from = condit
 
 circledat <- circleFun(c(0, 0), 4, npoints = 100)
 
-################################################################################
-#-------------------------- Sort out electrode mapping ------------------------#
-################################################################################
+####################################
+#----Sort out electrode mapping----#
+####################################
+
 # Read the layout
 layout <- read_delim("../../data/EEG1005.lay",
                      col_names = c("num","x", "y", "a", "b", "electrode"),
@@ -85,9 +69,10 @@ channels <- read_delim("../../data/channel_list.txt", col_names = c("num", "elec
 # Get the channels that we have
 layout <- layout %>% filter(electrode %in% channels$electrode)
 
-################################################################################
-# ---------------------- Interpolate each difference --------------------------#
-################################################################################
+######################################
+#---- Interpolate each difference----#
+######################################
+
 N_points <- 200
 datmat   <- matrix(0, ncol=15, nrow=N_points**2)
 colnames(datmat) <- colnames(mean_res)
