@@ -17,12 +17,13 @@ print(model_file_path)
 part_lst <- read_csv("data/participants.csv", col_types="int",n_max=n_part)
 
 # load the full data
-df       <- read_csv("data/full_data.csv", col_types =c("icciiiid??d"));
+df <- read_csv("data/full_data.csv", col_types =c("icciiiid??d"));
+df <- df %>% mutate(phase=as.complex(phase))
 
 # Filter based on the condition and participants
 df <- df %>%
           filter(freqC==freq_band, participant %in% part_lst$participant) %>%
-          mutate(participant = participant-4) # 
+          mutate(participant = participant-4) #
 
 # Input data
 by_trials <- df %>% group_by(participant, electrode, condition) %>%
