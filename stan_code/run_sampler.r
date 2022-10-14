@@ -2,8 +2,7 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(stringr))
 library(cmdstanr)
 library(rstan)
-
-cabs <- function(x) sqrt(Re(x)**2 + Im(x)**2)
+source("helper_functions")
 
 # Command line args
 args = commandArgs(trailingOnly=TRUE)
@@ -23,10 +22,7 @@ df       <- read_csv("data/full_data.csv", col_types =c("icciiiid??d"));
 # Filter based on the condition and participants
 df <- df %>%
           filter(freqC==freq_band, participant %in% part_lst$participant) %>%
-          mutate(participant = participant-4)
-
-# Convert to complex type
-df$phase <- sapply(X=df$phase, FUN = function(x) as.complex(gsub(" ", "", substr(x,1,nchar(x)-1))))
+          mutate(participant = participant-4) # 
 
 # Input data
 by_trials <- df %>% group_by(participant, electrode, condition) %>%
@@ -54,8 +50,7 @@ fit <- mod$sample(data            = stan_data,
                   iter_sampling   = iter_n/2,
                   refresh         = 50,
                   save_warmup     = F,
-                  init            = 0.5,
-                  max_treedepth=  12)
+                  init            = 0.5)
 
 # Save fit
 fit <- read_stan_csv(fit$output_files()) # Save output from cmdstanr in a way that preserves param layout.
