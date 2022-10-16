@@ -2,10 +2,6 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(stringr))
 library(rstan)
 library(cmdstanr)
-rstan_options(auto_write = TRUE)
-options(mc.cores = parallel::detectCores())
-
-cabs <- function(x) sqrt(Re(x)**2 + Im(x)**2)
 
 # Command line args
 args = commandArgs(trailingOnly=TRUE)
@@ -18,7 +14,8 @@ print(model_file_path)
 part_lst <- read_csv("data/participants.csv", col_types="int", n_max=16)
 
 # load the full data
-df       <- read_csv("data/full_data.csv", col_types =c("icciiiid??d"));
+df <- read_csv("data/full_data.csv", col_types =c("icciiiid??d"));
+df <- df %>% mutate(phase=as.complex(phase))
 
 for(i in 1:58){
 
@@ -57,10 +54,3 @@ for(i in 1:58){
   saveRDS(fit, paste("fitted_models/optim/","opt_",i,".rds", sep=""))
 
 }
-
-#sm  <- cmdstan_model(model_file_path)
-#fit <- sm$optimize(data = stan_data, iter=)
-
-# Save fit
-#fit <- read_stan_csv(fit$output_files()) # Save output from cmdstanr in a way that preserves param layout.
-#

@@ -2,7 +2,6 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(stringr))
 library(cmdstanr)
 library(rstan)
-source("helper_functions")
 
 # Command line args
 args = commandArgs(trailingOnly=TRUE)
