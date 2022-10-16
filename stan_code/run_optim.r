@@ -7,7 +7,6 @@ library(cmdstanr)
 args = commandArgs(trailingOnly=TRUE)
 model_file_path     <- args[1]                  # Stan Model File Path
 iter_n              <- as.integer(args[2])      # Number of sampling iterations
-model_id            <- args[3]                  # identifier to discriminate model fits
 print(model_file_path)
 
 # What participants to run from
