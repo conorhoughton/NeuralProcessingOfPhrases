@@ -10,6 +10,7 @@ The scripts expect the following directory layout:
 
 * **data/..** : All data files should be placed here.
 * **fitted_models/..** : This is where fitted models are saved.
+* **fitted_models/optim/..** : This is where optimisation fits are saved.
 * **models/..** : The location of the .stan model files.
 * **plots/..** : Plots and plotting scripts.
 
@@ -31,9 +32,11 @@ The typical call is:
 Point estimates of the posterior can be obtained through optmisation. We used this to
 give an estimate of the model behaviour for frequencies that were not of interest.
 
-The same procedure applies for optimisation without the choice for participant number:
+The same procedure applies for optimisation without the choice for participant number or the unique string:
 
-``` Rscript run_optim.r "models/model_2t.stan" 2000 21 "m2t" ```
+``` Rscript run_optim.r "models/model_2t.stan" 0 21 ```
+
+For point estimates the iteration argument is passed as zero.
 
 # 4 Plotting scripts
 
