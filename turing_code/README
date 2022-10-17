@@ -1,0 +1,6 @@
+
+This is a collection of pieces of code used when exploring the
+Bayesian modelling of the phase data; ultimately the work was done
+using stan and these programmes were not changed and adjusted without
+a view to preserving definite copies, often changes were made directly
+on the supercomputer that aren't reflected here. In short, the code is presented as is and is unlikely to be useful to others.

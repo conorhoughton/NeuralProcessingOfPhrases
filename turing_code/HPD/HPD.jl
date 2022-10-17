@@ -8,7 +8,7 @@ using Gadfly,Cairo,Fontconfig
 
 bigFrame=DataFrame(deserialize("example_chain.jls"))
 
-bigFrame=bigFrame[!,r"itpcC"]
+bigFrame=bigFrame[!,r"η"]
 
 conditions=["advp","rrrr","rrrv","avav","anan","phmi"]
 
