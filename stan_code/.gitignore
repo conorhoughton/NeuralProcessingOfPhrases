@@ -1,6 +1,7 @@
 models/*.rds
 data/full_data.csv
 fitted_models/*.rds
+fitted_models/optim/*.rds
 .ipynb_checkpoints
 output.txt
 Posterior_Analysis.ipynb

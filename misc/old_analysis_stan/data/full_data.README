@@ -2,7 +2,6 @@
 the file "full_data.csv" is required by the stan code. It can be
 generated using the make_stan_data.jl script in the julia folder. It is a dataframe, stored as csv, with
 
-
 participant,name,condition,conditionC,trial,electrode,freqC,freq,ft,phase,angle
 
 where name is the file name for the participant file
