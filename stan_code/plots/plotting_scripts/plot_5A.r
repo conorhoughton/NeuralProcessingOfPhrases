@@ -3,7 +3,7 @@ library(stringr)
 library(HDInterval)
 
 theme_set(theme_classic(base_size = 10,base_family="Times New Roman"))
-theme_update(legend.position = "none", axis.title.y = element_text(angle = 0, vjust = 0.5, face="italic"))
+theme_update(legend.position = "none", axis.title.y = element_text(angle = 0, vjust = 0.5, face="italic"), plot.background=element_rect(fill="transparent", color=NA))
 
 a_cv <- matrix(0, nrow=58, ncol=6)
 

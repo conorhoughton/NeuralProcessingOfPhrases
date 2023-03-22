@@ -66,8 +66,9 @@ layout <- read_delim("../../data/EEG1005.lay",
 # get channels we have
 channels <- read_delim("../../data/channel_list.txt", col_names = c("num", "electrode"))
 
-# Get the channels that we have
-layout <- layout %>% filter(electrode %in% channels$electrode)
+# get the channels we have and order 1->32 as in the data
+electrode_info <- merge(layout, channels)
+electrode_info <- electrode_info[order(electrode_info$num),]
 
 ######################################
 #---- Interpolate each difference----#
@@ -80,7 +81,7 @@ colnames(datmat) <- colnames(mean_res)
 grid_points <- expand.grid(x = seq(-2, 2, length=N_points), y = seq(-2, 2, length=N_points))
 
 for(i in 1:15){
-  spl1 <- gam(signal ~ s(x,y, bs = "ts"),data=data.frame(signal=mean_res[,i], x=layout$x, y=layout$y)) # "sos" k=27
+  spl1 <- gam(signal ~ s(x,y, bs = "ts"),data=data.frame(signal=mean_res[,i], x=electrode_info$x, y=electrode_info$y)) # "sos" k=27
   datmat[,i] <- predict(spl1, grid_points, type = "response")
 }
 
@@ -104,7 +105,7 @@ eeg_cap <- ggplot(datmat, aes(x, y, z = value)) +
                geom_line(data = data.frame(x = c(-0.25, 0, 0.25), y = c(2, 2.3, 2)), aes(x, y, z = NULL)) +
 
                # add points for the electrodes
-               geom_point(data = layout, aes(x, y, z = NULL, fill = NULL),
+               geom_point(data = electrode_info, aes(x, y, z = NULL, fill = NULL),
                           shape = 21, colour = 'black', size = 0.3, alpha=0.5) +
 
                facet_wrap(vars(diff), nrow = 3, ncol=5) +
