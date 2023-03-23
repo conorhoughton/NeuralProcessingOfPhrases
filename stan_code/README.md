@@ -4,6 +4,8 @@ The file ```full_data.csv``` is required by the stan code. It can be generated u
 
 Once this file has been generated it is necessary to run the ```convert_cn.r``` script. This changes the format of the complex number representation in the original file to one that works with R's ```as.complex``` function. This can take a little while to run but is only necessary to perform once, and saves time over changing this representation within each script.
 
+Analysis scripts for the statistical learning data (Pinto et al. 2022), are included, but the data is not open source. The corresponding stan model for this data is: ```models/model_2t_sl.stan```. The frequentist/ITPC analysis and plotting is contained in **sl_data/ITPC**, and plotting for the Bayesian results is in **sl_data/Bayes**.
+
 # 2 Directory Layout
 
 The scripts expect the following directory layout:
@@ -44,7 +46,11 @@ Plotting scripts plots Figures from the paper, saving the output to the correpon
 
 ``` Rscript <plot_script.r> ```
 
-# 5 Acknowledgements
+# 5 Simulation
+
+Simulation experiments and SBC can be found in the **simulation/..** directory.
+
+# 6 Acknowledgements
 The information provided within the following blog post was adapted and used for the headcap figures:
 * https://www.mattcraddock.com/blog/2017/02/25/erp-visualization-creating-topographical-scalp-maps-part-1/
 
