@@ -101,7 +101,7 @@ grid_points <- expand.grid(x = seq(-2, 2, length=N_points), y = seq(-2, 2, lengt
 for(i in 1:15){
   # Or Splines on spheres
   #spl1 <- gam(signal ~ s(x,y, bs = "sos", k=27),data=data.frame(signal=diffs[,i], x=layout$x, y=layout$y))
-  spl1 <- gam(signal ~ s(x,y, bs = "ts"),data=data.frame(signal=diffs[,i], x=electrode_info$x, y=electrode_info$y), sp=0.01)
+  spl1 <- gam(signal ~ s(x,y, bs = "ts"),data=data.frame(signal=diffs[,i], x=electrode_info$x, y=electrode_info$y))
   datmat[,i] <- predict(spl1, grid_points, type = "response")
 }
 
