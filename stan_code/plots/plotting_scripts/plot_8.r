@@ -50,7 +50,7 @@ p <- ggplot() +
         scale_fill_brewer(palette = "Accent") +
         xlab( expression(italic(widehat(R)))) + ylab(expression(italic(frac(N[eff], N))))
 
-ggsave(filename = "../Figure_7/neff_rhat.tiff", plot = p, dpi = 600, width = 0.6*5.2, height=2.6, units="in", compression="lzw")
+ggsave(filename = "../Figure_8/neff_rhat.tiff", plot = p, dpi = 600, width = 0.6*5.2, height=2.6, units="in", compression="lzw")
 
 ################################################################################
 ################################### Energy #####################################
@@ -61,7 +61,7 @@ np <- nuts_params(fit)
 bayesplot_theme_set(theme_classic())
 bayesplot_theme_update(text= element_text(size = 10,family="Times New Roman"))
 p <- mcmc_nuts_energy(np, merge_chains=TRUE) + theme(legend.position=c(0.85, 0.75))
-ggsave(filename = "../Figure_7/energy.tiff", plot = p, dpi = 600, width = 0.4*5.2, height=2.6, units="in", compression="lzw")
+ggsave(filename = "../Figure_8/energy.tiff", plot = p, dpi = 600, width = 0.4*5.2, height=2.6, units="in", compression="lzw")
 
 ################################################################################
 ################################# Trace ########################################
@@ -73,21 +73,21 @@ bayesplot_theme_update(text= element_text(size = 10,family="Times New Roman"))
 
 color_scheme_set(colorRampPalette(c("#7fc97f", "black"))(8)[1:6])
 p <- mcmc_trace(fit, bad_pars[1]) + legend_none() + yaxis_ticks(FALSE) + yaxis_text(FALSE) + ylab("")
-ggsave(filename = "../Figure_7/bp1.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
+ggsave(filename = "../Figure_8/bp1.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
 
 
 color_scheme_set(colorRampPalette(c("#beaed4", "black"))(8)[1:6])
 p <- mcmc_trace(fit, bad_pars[2], transform=function(x) 1/(1+x^2))  + legend_none() + yaxis_ticks(FALSE) + yaxis_text(FALSE) + ylab("")
-ggsave(filename = "../Figure_7/bp2.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
+ggsave(filename = "../Figure_8/bp2.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
 
 color_scheme_set(colorRampPalette(c("#fdc086", "black"))(8)[1:6])
 p <- mcmc_trace(fit, bad_pars[3])  + legend_none() + yaxis_ticks(FALSE) + yaxis_text(FALSE) + ylab("")
-ggsave(filename = "../Figure_7/bp3.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
+ggsave(filename = "../Figure_8/bp3.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
 
 color_scheme_set(colorRampPalette(c("#ffff99", "black"))(8)[1:6])
 p <- mcmc_trace(fit, bad_pars[4])  + legend_none() + yaxis_ticks(FALSE) + yaxis_text(FALSE) + ylab("")
-ggsave(filename = "../Figure_7/bp4.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
+ggsave(filename = "../Figure_8/bp4.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
 
 color_scheme_set(colorRampPalette(c("#386cb0", "black"))(8)[1:6])
 p <- mcmc_trace(fit, bad_pars[5])  + legend_none() + yaxis_ticks(FALSE) + yaxis_text(FALSE) + ylab("")
-ggsave(filename = "../Figure_7/bp5.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")
+ggsave(filename = "../Figure_8/bp5.tiff", plot = p, dpi = 600, width = 5.2-0.162, height=2.6/4, units="in", compression="lzw")

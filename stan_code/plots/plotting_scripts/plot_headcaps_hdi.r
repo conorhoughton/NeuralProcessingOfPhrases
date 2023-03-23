@@ -135,7 +135,7 @@ eeg_cap <- ggplot(datmat, aes(x, y, z = value)) +
   labs(fill="\u0394R")
 
 # Save the plot
-ggsave(eeg_cap, filename = "../Figure_5/cap_by_condition_p16.tiff",dpi = 600, units = "in", height = 2.6, width=5.2/1.15, compression = "lzw")
+ggsave(eeg_cap, filename = "../Figure_6/cap_by_condition_p16.tiff",dpi = 600, units = "in", height = 2.6, width=5.2/1.15, compression = "lzw")
 
 theme_set(theme_void(base_size = 10, base_family="Times New Roman"))
 theme_update(legend.title = element_text(face="italic"))
@@ -152,4 +152,4 @@ eeg_cap <- ggplot(filter(datmat, diff == "AN - AV"), aes(x, y, z = value)) +
   geom_text(data = electrode_info, aes(x, y, z = NULL, fill = NULL, label=electrode), size=2.85) + labs(fill="\u0394R")
 
 # Save the plot
-ggsave(eeg_cap, filename = "../Figure_6/AN-AV_big.tiff",dpi = 600, units = "in", height = 2.6, width=3, compression = "lzw")
+ggsave(eeg_cap, filename = "../Figure_7/AN-AV_big.tiff",dpi = 600, units = "in", height = 2.6, width=3, compression = "lzw")

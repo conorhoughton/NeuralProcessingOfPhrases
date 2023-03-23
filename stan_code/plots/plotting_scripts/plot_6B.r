@@ -36,7 +36,7 @@ p <- ggplot(R, aes(x = x, y = cond, fill = cond, group=cond, color=cond)) +
 			coord_flip() +
 			xlab("") + xlab("")
 
-ggsave(plot=p, filename = "../Figure_5/R_marginals.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")
+ggsave(plot=p, filename = "../Figure_6/R_marginals.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")
 
 ###################################################
 #---- Calculate difference pairs from samples ----#
@@ -113,4 +113,4 @@ p <- ggplot(data=diffs, aes(x=ref_group, y=diffs, group=group, color=diff_group,
 				scale_color_brewer(palette="Dark2") +
 				scale_fill_brewer(palette="Dark2") + ylab("\u0394R") + theme(axis.text.x = element_blank())
 
-ggsave(plot=p, filename = "../Figure_5/R_diffs.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")
+ggsave(plot=p, filename = "../Figure_6/R_diffs.tiff", dpi=600, width = 2.6, height = 2.6/2, units = "in", compression="lzw")

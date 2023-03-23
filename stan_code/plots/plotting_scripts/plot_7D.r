@@ -38,4 +38,4 @@ p <- ggplot(data=lambda_post_diff, aes(x=sample, y=electrode, color=electrode, f
         scale_color_brewer(palette = "Dark2") + xlab("\u0394R (AN - AV)") + ylab("") +
         scale_fill_brewer(palette = "Dark2")
 
-ggsave(p, filename = "../Figure_6/plot_6d.tiff",dpi = 600, units = "in", height = 2.6*0.5, width=2.2, compression = "lzw")
+ggsave(p, filename = "../Figure_7/plot_7d.tiff",dpi = 600, units = "in", height = 2.6*0.5, width=2.2, compression = "lzw")

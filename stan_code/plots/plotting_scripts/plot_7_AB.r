@@ -26,7 +26,7 @@ p <- ggplot(data=a_p, aes(y=value,x=reorder(participant,value, FUN=median), grou
                   fun = median, size=1.5, color="black") +
         ylab("\u03b2") + xlab("participant")
 
-ggsave(p, filename = "../Figure_6/part_mariginals.tiff",dpi = 600, units = "in", height = 2.6*(3/4), width=5.2, compression = "lzw")
+ggsave(p, filename = "../Figure_7/part_mariginals.tiff",dpi = 600, units = "in", height = 2.6*(3/4), width=5.2, compression = "lzw")
 
 sigma_t <- extract(fit, "s_p")$s_p
 nu      <- extract(fit, "nu")$nu
@@ -46,4 +46,4 @@ p <- ggplot(data=slope_var, aes(x=sd,y=cond, fill=cond)) +
     scale_fill_brewer(palette = "Dark2") +
     coord_cartesian(xlim=c(0, 2)) + ylab("") + xlab("std deviation")
 
- ggsave(p, filename = "../Figure_6/s_e.tiff",dpi = 600, units = "in", height = 2.6* 0.5, width=2.2, compression = "lzw")
+ ggsave(p, filename = "../Figure_7/s_e.tiff",dpi = 600, units = "in", height = 2.6* 0.5, width=2.2, compression = "lzw")
