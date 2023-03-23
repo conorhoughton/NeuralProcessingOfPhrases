@@ -7,3 +7,5 @@ output.txt
 Posterior_Analysis.ipynb
 data/sl_data/*
 *.tiff
+models/model_2t
+models/model_2t_sl
