@@ -5,4 +5,5 @@ fitted_models/optim/*.rds
 .ipynb_checkpoints
 output.txt
 Posterior_Analysis.ipynb
-data/sl_data/data.csv
+data/sl_data/*
+*.tiff
