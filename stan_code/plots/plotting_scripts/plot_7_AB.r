@@ -18,12 +18,12 @@ p <- ggplot(data=a_p, aes(y=value,x=reorder(participant,value, FUN=median), grou
         geom_hline(aes(yintercept=0), alpha=0.5) +
         geom_linerange(stat = "summary",
                   fun.min = function(x) hdi(x, credMass = 0.9)[1],
-                  fun.max = function(x) hdi(x, credMass = 0.9)[2]) +
+                  fun.max = function(x) hdi(x, credMass = 0.9)[2], color="#3182bd") +
         geom_linerange(stat = "summary",
                   fun.min = function(x) hdi(x, credMass = 0.5)[1],
-                  fun.max = function(x) hdi(x, credMass = 0.5)[2], size=1.1) +
+                  fun.max = function(x) hdi(x, credMass = 0.5)[2], size=1.1*1.36, color="#08519c") +
         geom_point(stat = "summary",
-                  fun = median, size=1.5, color="black") +
+                  fun = median, size=1.36, color="black", shape=21, fill="#9ecae1") +
         ylab("\u03b2") + xlab("participant")
 
 ggsave(p, filename = "../Figure_7/part_mariginals.tiff",dpi = 600, units = "in", height = 2.6*(3/4), width=5.2, compression = "lzw")
