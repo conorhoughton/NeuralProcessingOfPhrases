@@ -24,6 +24,10 @@ dens_func <- function(x,y){
     return(dgamma(sqrt(x^2+y^2),shape = 10,rate = 10) * (1/sqrt(x^2 +y^2)))
 }
 
+dens_func2 <- function(x,y){
+    return(dgamma(sqrt(x^2+y^2),shape = 50,rate = 50) * (1/sqrt(x^2 +y^2))/(2*pi))
+}
+
 # Wrapped cauchy pdf
 WC_d <- function(theta, mu, gamma){
     (1/(2*pi)) * sinh(gamma) / (cosh(gamma) - cos(theta-mu))

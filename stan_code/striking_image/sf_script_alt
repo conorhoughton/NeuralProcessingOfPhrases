@@ -1,0 +1,28 @@
+set pm3d
+#set hidden3d
+set isosample 40, 40
+set samples 500, 500
+
+# credit to "https://github.com/Gnuplotting/gnuplot-palettes" for the pallete
+load "viridis.pal"
+
+set xrange [-4:4]
+set yrange [-4:4]
+
+unset border
+unset xtics
+unset ytics
+unset ztics
+unset key
+unset colorbox
+
+set view 2.5, 45, 1,1
+set terminal svg size 3840, 2160;
+set output "striking.svg"
+
+f(x,y, alpha, beta, xoffset, yoffset) = (1/sqrt((x-xoffset)**2 + (y-yoffset)**2)) * ((beta**alpha)/gamma(alpha)) * sqrt((x-xoffset)**2 + (y-yoffset)**2)**(alpha-1)*exp(-beta*sqrt((x-xoffset)**2 + (y-yoffset)**2)) * 1/(2*pi)
+
+alpha = 15
+beta  = 15
+
+splot f(x,y,alpha,beta,0,0) + f(x,y,alpha,beta, 2,2) + f(x,y,alpha,beta,2,-2) + f(x,y,alpha,beta,-2,2)+ f(x,y,alpha,beta,-2,-2) notitle lc rgb "white" lw 0.75

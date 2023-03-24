@@ -88,7 +88,7 @@ colnames(datmat) <- colnames(mean_res)
 grid_points <- expand.grid(x = seq(-2, 2, length=N_points), y = seq(-2, 2, length=N_points))
 
 for(i in 1:15){
-  spl1 <- gam(signal ~ s(x,y, bs = "ts"),data=data.frame(signal=mean_res[,i], x=electrode_info$x, y=electrode_info$y), sl=0.01) # "sos" k=27
+  spl1 <- gam(signal ~ s(x,y, bs = "ts"),data=data.frame(signal=mean_res[,i], x=electrode_info$x, y=electrode_info$y)) # "sos" k=27
   datmat[,i] <- predict(spl1, grid_points, type = "response")
 }
 
