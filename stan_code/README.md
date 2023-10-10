@@ -1,3 +1,11 @@
+# Bayesian analysis of phase data in EEG and MEG
+
+Electroencephalography and magnetoencephalography recordings are non-invasive and temporally precise, making them invaluable tools in the investigation of neural responses in humans. However, these recordings are noisy, both because the neuronal electrodynamics involved produces a muffled signal and because the neuronal processes of interest compete with numerous other processes, from blinking to day-dreaming. One fruitful response to this noisiness has been to use stimuli with a specific frequency and to look for the signal of interest in the response at that frequency. Typically this signal involves measuring the coherence of response phase: here a Bayesian approach to measuring phase coherence is described. This Bayesian approach is illustrated using an example from neurolinguistics and is more descriptive and more data-efficient than the traditional statistical approaches.
+
+Sydney Dimmock, Cian O'Donnell, Conor J Houghton (2023) Bayesian analysis of phase data in EEG and MEG eLife 12:e84602 
+
+https://doi.org/10.7554/eLife.84602
+
 # 1 Data
 
 The file ```full_data.csv``` is required by the stan code. It can be generated using the ```make_stan_data.jl``` script in the julia folder.
